@@ -1,8 +1,17 @@
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
 import express from "express";
+import configLoader from "config";
+import { z } from "zod";
 
 const main = async (): Promise<void> => {
+	const configValidator = z.object({
+		port: z.number(),
+	});
+
+	const config = configValidator.parse(configLoader);
+	console.log(config);
+
 	const db = await open({
 		filename: ":memory:",
 		driver: sqlite3.cached.Database,
