@@ -1,0 +1,24 @@
+{
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"project": "./tsconfig.json"
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:promise/recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:@typescript-eslint/recommended-requiring-type-checking",
+		"prettier"
+	],
+	"plugins": ["simple-import-sort", "@typescript-eslint"],
+	"rules": {
+		"simple-import-sort/imports": "error",
+		"simple-import-sort/exports": "error",
+		"no-restricted-syntax": [
+			"error",
+			{ "selector": "ExportDefaultDeclaration", "message": "Prefer named exports" }
+		],
+		"@typescript-eslint/consistent-type-definitions": ["error", "type"]
+	}
+}
