@@ -18,7 +18,7 @@
 		"express": "4.17.1",
 		"sqlite": "4.0.23",
 		"sqlite3": "5.0.2",
-		"zod": "3.10.3"
+		"zod": "3.11.4"
 	},
 	"devDependencies": {
 		"@types/config": "0.0.39",
@@ -30,7 +30,7 @@
 		"eslint": "7.32.0",
 		"eslint-config-prettier": "8.3.0",
 		"eslint-plugin-node": "11.1.0",
-		"eslint-plugin-promise": "5.1.0",
+		"eslint-plugin-promise": "5.1.1",
 		"eslint-plugin-simple-import-sort": "7.0.0",
 		"prettier": "2.4.1",
 		"ts-node-dev": "1.1.8",
