@@ -1,4 +1,4 @@
-name: Validate workflo
+name: Validate workflow
 
 on:
     - push
