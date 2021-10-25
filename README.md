@@ -1,10 +1,10 @@
 # Clean architecture example
 
--   Example repository implementing
-    -   https://www.todobackend.com/ with additional AUTH layer (so the CRUD operations are not global but per user)
-    -   Implemented with Clean architecture (Onion architecture)
-    -   TypeScript & Express
-    -   SQLite (in memory)
+-   Example repository implementing the Clean architecture (Onion architecture) concepts
+    -   API spec is from https://www.todobackend.com/
+    -   Language: TypeScript
+    -   Web server: Express
+    -   Database: SQLite (in memory)
 
 ## TODOs
 
