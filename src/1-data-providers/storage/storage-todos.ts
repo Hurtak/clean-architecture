@@ -20,7 +20,7 @@ export const storageTodos = ({ storageClient }: { storageClient: StorageClient }
 	};
 
 	return {
-		get: async (): Promise<Todo[]> => {
+		getAll: async (): Promise<Todo[]> => {
 			const data = await storageClient.query(
 				todoDatabaseValidator,
 				`
@@ -44,8 +44,24 @@ export const storageTodos = ({ storageClient }: { storageClient: StorageClient }
 
 			return data ? todoDatabaseToTodo(data) : null;
 		},
-		delete: async (): Promise<void> => {
+		deleteAll: async (): Promise<void> => {
 			await storageClient.mutation(`DELETE FROM todos`);
+		},
+		deleteById: async (id: Todo["id"]): Promise<boolean> => {
+			await storageClient.mutation(
+				`
+					DELETE FROM todos
+					where id = $id
+				`,
+				{ $id: id }
+			);
+			const res = await storageClient.queryOne(
+				z.object({ rows_deleted: z.number() }),
+				`select changes() as rows_deleted`
+			);
+
+			const deleted = res ? res.rows_deleted > 0 : false;
+			return deleted;
 		},
 	};
 };

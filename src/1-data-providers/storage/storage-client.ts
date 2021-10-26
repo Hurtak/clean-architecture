@@ -37,8 +37,8 @@ export const storageClient = async () => {
 			return result !== undefined ? (validator.parse(result) as TResult) : null;
 		},
 
-		mutation: async (sql: Sql): Promise<void> => {
-			await database.exec(sql);
+		mutation: async (sql: Sql, params?: QueryParams): Promise<void> => {
+			await database.run(sql, params);
 		},
 	};
 };

@@ -8,9 +8,7 @@ const main = async (): Promise<void> => {
 
 	const storageInstance = await storage();
 	const todosInstance = todos({
-		getTodos: storageInstance.todos.get,
-		getTodoById: storageInstance.todos.getById,
-		deleteAll: storageInstance.todos.delete,
+		storage: storageInstance,
 	});
 
 	restApi({
