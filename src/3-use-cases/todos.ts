@@ -1,5 +1,5 @@
 import { Storage } from "../1-data-providers/storage";
-import { Todo } from "../4-entities/todos";
+import { Todo, TodoWithoutId } from "../4-entities/todos";
 
 export const todos = ({ storage }: { storage: Storage }) => {
 	return {
@@ -8,6 +8,9 @@ export const todos = ({ storage }: { storage: Storage }) => {
 		},
 		getById: (id: Todo["id"]): Promise<Todo | null> => {
 			return storage.todos.getById(id);
+		},
+		create: (todoWithoutId: TodoWithoutId): Promise<Todo> => {
+			return storage.todos.create(todoWithoutId);
 		},
 		deleteAll: async (): Promise<void> => {
 			await storage.todos.deleteAll();

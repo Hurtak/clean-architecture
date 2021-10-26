@@ -1,7 +1,8 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
 import { Todos } from "../../3-use-cases/todos";
+import { TodoTextTooLong, TodoTextTooShort, TodoWithoutId, validateTodo } from "../../4-entities/todos";
 
 // TODO
 /* eslint-disable @typescript-eslint/no-misused-promises */
@@ -24,8 +25,11 @@ const validateTodoIdParam = (req: Request, res: Response): { type: "ERROR" } | {
 	return { type: "OK", id: params.data.id };
 };
 
+const errorResponse = (error: Error) => ({ error: { name: error.name, message: error.message } });
+
 export const restApi = ({ port, todos }: { port: number; todos: Todos }): void => {
 	const server = express();
+	server.use(express.json());
 
 	server.get("/heartbeat", function (req, res) {
 		res.send("OK");
@@ -39,6 +43,35 @@ export const restApi = ({ port, todos }: { port: number; todos: Todos }): void =
 		await todos.deleteAll();
 		res.sendStatus(204);
 	});
+	server.post("/", async (req, res) => {
+		const body = z
+			.object({
+				text: z.string(),
+				completed: z.boolean(),
+			})
+			.safeParse(req.body);
+		if (!body.success) {
+			res.status(400).json({ error: body.error });
+			return;
+		}
+
+		const todoWithoutId: TodoWithoutId = { text: body.data.text, completed: body.data.completed };
+
+		try {
+			validateTodo(todoWithoutId);
+		} catch (error) {
+			if (error instanceof TodoTextTooShort || error instanceof TodoTextTooLong) {
+				res.status(400).json(errorResponse(error));
+				return;
+			} else {
+				throw error;
+			}
+		}
+
+		const newTodo = await todos.create(todoWithoutId);
+
+		res.json(newTodo);
+	});
 
 	server.get("/:id", async (req, res) => {
 		const params = validateTodoIdParam(req, res);
@@ -51,6 +84,10 @@ export const restApi = ({ port, todos }: { port: number; todos: Todos }): void =
 			res.sendStatus(404);
 		}
 	});
+	server.patch("/:id", (req, res) => {
+		// TODO
+		res.sendStatus(500);
+	});
 	server.delete("/:id", async (req, res) => {
 		const params = validateTodoIdParam(req, res);
 		if (params.type === "ERROR") return;
@@ -60,6 +97,15 @@ export const restApi = ({ port, todos }: { port: number; todos: Todos }): void =
 		} else {
 			res.sendStatus(404);
 		}
+	});
+
+	// Generic error handler
+	// `next` parameter is required because of some magic Express parameters matching
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	server.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+		console.log(error);
+		res.status(500);
+		res.json(errorResponse(error));
 	});
 
 	server.listen(port, () => {

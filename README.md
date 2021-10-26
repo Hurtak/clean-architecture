@@ -17,8 +17,7 @@
 
 ## TODOs
 
--   src/3-use-cases/todos.ts USE CASE is importing DATA PROVIDER, but it is only type, so maybe it is fine?
-    -   update
+-   logging?
 -   have type constuctor that does validation?
 -   tests?
 -   handle TODOs
