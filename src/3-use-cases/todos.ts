@@ -1,10 +1,23 @@
-import { Storage } from "../1-data-providers/storage";
 import { Todo } from "../4-entities/todos";
 
-export const todos = ({ storage }: { storage: Storage }) => {
+export const todos = ({
+	getTodos,
+	getTodoById,
+	deleteAll,
+}: {
+	getTodos: () => Promise<Todo[]>;
+	getTodoById: (id: Todo["id"]) => Promise<Todo | null>;
+	deleteAll: () => Promise<void>;
+}) => {
 	return {
 		get: (): Promise<Todo[]> => {
-			return storage.todos.get();
+			return getTodos();
+		},
+		getById: (id: Todo["id"]): Promise<Todo | null> => {
+			return getTodoById(id);
+		},
+		deleteAll: async (): Promise<void> => {
+			await deleteAll();
 		},
 	};
 };

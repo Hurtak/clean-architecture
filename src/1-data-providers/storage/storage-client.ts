@@ -7,6 +7,7 @@ import { ValueFromPromise } from "../../utils/typescript";
 type Sql = string;
 type ValidatorGeneric<T> = z.ZodType<T>;
 type ValidatorResultGeneric<T1, T2 extends ValidatorGeneric<T1>> = z.infer<T2>;
+type QueryParams = { [key: `$${string}`]: string | number };
 
 export const storageClient = async () => {
 	const database = await open({
@@ -17,10 +18,23 @@ export const storageClient = async () => {
 	return {
 		query: async <T, TValidator extends ValidatorGeneric<T>, TResult extends ValidatorResultGeneric<T, TValidator>>(
 			validator: TValidator,
-			sql: Sql
+			sql: Sql,
+			params?: QueryParams
 		): Promise<TResult[]> => {
-			const result = await database.all(sql);
+			const result = await database.all(sql, params);
 			return z.array(validator).parse(result) as TResult[];
+		},
+		queryOne: async <
+			T,
+			TValidator extends ValidatorGeneric<T>,
+			TResult extends ValidatorResultGeneric<T, TValidator>
+		>(
+			validator: TValidator,
+			sql: Sql,
+			params?: QueryParams
+		): Promise<TResult | null> => {
+			const result = await database.get<TResult>(sql, params);
+			return result !== undefined ? (validator.parse(result) as TResult) : null;
 		},
 
 		mutation: async (sql: Sql): Promise<void> => {

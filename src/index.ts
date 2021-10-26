@@ -7,7 +7,11 @@ const main = async (): Promise<void> => {
 	const configInstance = config();
 
 	const storageInstance = await storage();
-	const todosInstance = todos({ storage: storageInstance });
+	const todosInstance = todos({
+		getTodos: storageInstance.todos.get,
+		getTodoById: storageInstance.todos.getById,
+		deleteAll: storageInstance.todos.delete,
+	});
 
 	restApi({
 		port: configInstance.port,
