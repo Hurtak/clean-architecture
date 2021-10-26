@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { Todo, TodoWithoutId } from "../../4-entities/todos";
+import { createTodo, Todo, TodoWithoutId } from "../../4-entities/todos";
 import { StorageClient } from "./storage-client";
 
 const todoDatabaseValidator = z.object({
@@ -11,13 +11,8 @@ const todoDatabaseValidator = z.object({
 type TodoDatabase = z.infer<typeof todoDatabaseValidator>;
 
 export const storageTodos = ({ storageClient }: { storageClient: StorageClient }) => {
-	const todoDatabaseToTodo = (todoDatabase: TodoDatabase): Todo => {
-		return {
-			id: todoDatabase.id,
-			text: todoDatabase.text,
-			completed: Boolean(todoDatabase.completed),
-		};
-	};
+	const todoDatabaseToTodo = (todoDatabase: TodoDatabase): Todo =>
+		createTodo(todoDatabase.id, todoDatabase.text, Boolean(todoDatabase.completed));
 
 	const getAll = async (): Promise<Todo[]> => {
 		const data = await storageClient.query(

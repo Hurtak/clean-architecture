@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
 import { Todos } from "../../3-use-cases/todos";
-import { TodoTextTooLong, TodoTextTooShort, TodoWithoutId, validateTodo } from "../../4-entities/todos";
+import { createTodoWithoutId, TodoTextTooLong, TodoTextTooShort } from "../../4-entities/todos";
 
 // TODO
 /* eslint-disable @typescript-eslint/no-misused-promises */
@@ -55,10 +55,9 @@ export const restApi = ({ port, todos }: { port: number; todos: Todos }): void =
 			return;
 		}
 
-		const todoWithoutId: TodoWithoutId = { text: body.data.text, completed: body.data.completed };
-
+		let todoWithoutId;
 		try {
-			validateTodo(todoWithoutId);
+			todoWithoutId = createTodoWithoutId(body.data.text, body.data.completed);
 		} catch (error) {
 			if (error instanceof TodoTextTooShort || error instanceof TodoTextTooLong) {
 				res.status(400).json(errorResponse(error));

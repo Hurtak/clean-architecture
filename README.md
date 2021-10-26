@@ -20,4 +20,6 @@
 -   logging?
 -   have type constuctor that does validation?
 -   tests?
--   handle TODOs
+-   cleanup
+    -   handle TODOs
+    -   handle @ts-ignore
