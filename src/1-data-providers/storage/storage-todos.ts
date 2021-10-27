@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { createTodo, Todo, TodoWithoutId } from "../../4-entities/todos";
+import { Logger } from "../logger";
 import { StorageClient } from "./storage-client";
 
 const todoDatabaseValidator = z.object({
@@ -10,11 +11,12 @@ const todoDatabaseValidator = z.object({
 });
 type TodoDatabase = z.infer<typeof todoDatabaseValidator>;
 
-export const storageTodos = ({ storageClient }: { storageClient: StorageClient }) => {
+export const storageTodos = ({ storageClient, logger }: { storageClient: StorageClient; logger: Logger }) => {
 	const todoDatabaseToTodo = (todoDatabase: TodoDatabase): Todo =>
 		createTodo(todoDatabase.id, todoDatabase.text, Boolean(todoDatabase.completed));
 
 	const getAll = async (): Promise<Todo[]> => {
+		logger.verbose("getting all todos");
 		const data = await storageClient.query(
 			todoDatabaseValidator,
 			`
@@ -25,7 +27,9 @@ export const storageTodos = ({ storageClient }: { storageClient: StorageClient }
 
 		return data.map(todoDatabaseToTodo);
 	};
+
 	const getById = async (id: Todo["id"]): Promise<Todo | null> => {
+		logger.verbose(`getting todo ${id}`);
 		const data = await storageClient.queryOne(
 			todoDatabaseValidator,
 			`
@@ -35,11 +39,13 @@ export const storageTodos = ({ storageClient }: { storageClient: StorageClient }
 			`,
 			{ $id: id }
 		);
+		logger.verbose(data ? `getting todo ${id} done` : `getting todo ${id} failed, todo not found`);
 
 		return data ? todoDatabaseToTodo(data) : null;
 	};
 
 	const create = async (todoWithoutId: TodoWithoutId): Promise<Todo> => {
+		logger.verbose(`creating todo`);
 		await storageClient.mutation(
 			`
 				INSERT INTO todos (text, completed)
@@ -55,14 +61,17 @@ export const storageTodos = ({ storageClient }: { storageClient: StorageClient }
 		if (!todo) {
 			throw new Error("Unexpected state, created Todo but could not find it in the DB after creation.");
 		}
+		logger.verbose(`created todo with id ${data.id}`);
 
 		return todo;
 	};
 
 	const deleteAll = async (): Promise<void> => {
+		logger.verbose(`deleting all todos`);
 		await storageClient.mutation(`DELETE FROM todos`);
 	};
 	const deleteById = async (id: Todo["id"]): Promise<boolean> => {
+		logger.verbose(`deleting todo ${id}`);
 		await storageClient.mutation(
 			`
 				DELETE FROM todos
@@ -76,6 +85,8 @@ export const storageTodos = ({ storageClient }: { storageClient: StorageClient }
 		);
 
 		const deleted = data ? data.rows_deleted > 0 : false;
+		logger.verbose(deleted ? `deleting todo ${id} done` : `deleting todo ${id} failed, todo not found`);
+
 		return deleted;
 	};
 

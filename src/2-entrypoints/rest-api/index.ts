@@ -1,11 +1,9 @@
 import express, { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
+import { Logger } from "../../1-data-providers/logger";
 import { Todos } from "../../3-use-cases/todos";
 import { createTodoWithoutId, TodoTextTooLong, TodoTextTooShort } from "../../4-entities/todos";
-
-// TODO
-/* eslint-disable @typescript-eslint/no-misused-promises */
 
 const validateTodoIdParam = (req: Request, res: Response): { type: "ERROR" } | { type: "OK"; id: number } => {
 	const paramsValidator = z.object({
@@ -27,9 +25,15 @@ const validateTodoIdParam = (req: Request, res: Response): { type: "ERROR" } | {
 
 const errorResponse = (error: Error) => ({ error: { name: error.name, message: error.message } });
 
-export const restApi = ({ port, todos }: { port: number; todos: Todos }): void => {
+export const restApi = ({ port, todos, logger }: { port: number; todos: Todos; logger: Logger }): void => {
 	const server = express();
 	server.use(express.json());
+
+	server.use((req: Request, res: Response, next: NextFunction) => {
+		logger.log(`-> ${req.method} ${req.url} req`);
+		next();
+		logger.log(`<- ${req.method} ${req.url} res ${res.statusCode}`);
+	});
 
 	server.get("/heartbeat", function (req, res) {
 		res.send("OK");
@@ -102,12 +106,12 @@ export const restApi = ({ port, todos }: { port: number; todos: Todos }): void =
 	// `next` parameter is required because of some magic Express parameters matching
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	server.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-		console.log(error);
+		logger.error(String(error));
 		res.status(500);
 		res.json(errorResponse(error));
 	});
 
 	server.listen(port, () => {
-		console.log(`Server running at http://localhost:${port}`);
+		logger.log(`server running at http://localhost:${port}`);
 	});
 };

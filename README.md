@@ -17,7 +17,10 @@
 
 ## TODOs
 
--   logging?
+-   logger - the api routes are async and express is sync + done, we do not correctly call done, so the middlewares do not work correctly
+    -   test 404 routes if they log 404
+    -   test throwing in routes and the generic error handler
+-   exceptions or maybe type?
 -   tests?
 -   cleanup
     -   handle TODOs
