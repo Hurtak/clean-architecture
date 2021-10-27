@@ -3,7 +3,6 @@
 	"version": "1.0.0",
 	"repository": "github:hurtak/clean-architecture",
 	"license": "MIT",
-	"type": "module",
 	"scripts": {
 		"dev": "ts-node-dev --unhandled-rejections=strict --respawn src/index.ts",
 		"build": "tsc",

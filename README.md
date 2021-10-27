@@ -18,7 +18,6 @@
 ## TODOs
 
 -   logging?
--   have type constuctor that does validation?
 -   tests?
 -   cleanup
     -   handle TODOs
