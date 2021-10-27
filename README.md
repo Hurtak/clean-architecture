@@ -18,9 +18,12 @@
 ## TODOs
 
 -   patch route
+-   maybe add something more so we have more than one of each in the use case?
 -   exceptions or maybe type?
     -   if (error instanceof TodoTextTooShort || error instanceof TodoTextTooLong) {
+-   Problems/Questions:
+    -   there is import of types from outer layers to inner ones, how to solve this?
+    -   how would we do auth? In the 2-entry-point API we would call 3-use-case User.isAuthenticated and based on that conditionally call Todo.get (also in 2-entry-point)?
 -   tests?
 -   cleanup
     -   handle TODOs
-    -   handle @ts-ignore
