@@ -1,11 +1,21 @@
-import express, { NextFunction, Request, Response } from "express";
-import { z } from "zod";
+import KoaRouter from "@koa/router";
+import Koa from "koa";
+import koaBodyParser from "koa-bodyparser";
+import { z, ZodError } from "zod";
 
 import { Logger } from "../../1-data-providers/logger";
 import { Todos } from "../../3-use-cases/todos";
 import { createTodoWithoutId, TodoTextTooLong, TodoTextTooShort } from "../../4-entities/todos";
 
-const validateTodoIdParam = (req: Request, res: Response): { type: "ERROR" } | { type: "OK"; id: number } => {
+const createErrorResponse = (error: Error | ZodError) => {
+	if (error instanceof ZodError) {
+		return { error: { name: "ValidationError", message: "Invalid shape the request data", issues: error.issues } };
+	}
+
+	return { error: { name: error.name, message: error.message } };
+};
+
+const validateTodoIdParam = (ctx: KoaRouter.RouterContext): { type: "ERROR" } | { type: "OK"; id: number } => {
 	const paramsValidator = z.object({
 		id: z
 			.string()
@@ -14,48 +24,53 @@ const validateTodoIdParam = (req: Request, res: Response): { type: "ERROR" } | {
 			.transform((str) => Number(str)),
 	});
 
-	const params = paramsValidator.safeParse(req.params);
+	const params = paramsValidator.safeParse(ctx.params);
 	if (!params.success) {
-		res.status(400).json({ error: params.error });
+		ctx.status = 400;
+		ctx.body = createErrorResponse(params.error);
 		return { type: "ERROR" };
 	}
 
 	return { type: "OK", id: params.data.id };
 };
 
-const errorResponse = (error: Error) => ({ error: { name: error.name, message: error.message } });
-
 export const restApi = ({ port, todos, logger }: { port: number; todos: Todos; logger: Logger }): void => {
-	const server = express();
-	server.use(express.json());
+	const server = new Koa();
+	const router = new KoaRouter();
 
-	server.use((req: Request, res: Response, next: NextFunction) => {
-		logger.log(`-> ${req.method} ${req.url} req`);
-		next();
-		logger.log(`<- ${req.method} ${req.url} res ${res.statusCode}`);
+	// Middlewares
+	server.use(koaBodyParser({ enableTypes: ["json"] }));
+
+	const formatBody = (body: unknown): string => JSON.stringify(body)?.slice(0, 100) ?? "";
+	server.use(async (ctx, next) => {
+		logger.log(`-> ${ctx.method} ${ctx.url} req ${formatBody(ctx.request.body)}`);
+		await next();
+		logger.log(`<- ${ctx.method} ${ctx.url} res  ${ctx.status} ${formatBody(ctx.body)}`);
 	});
 
-	server.get("/heartbeat", function (req, res) {
-		res.send("OK");
+	// Routes
+	router.get("/heartbeat", (ctx) => {
+		ctx.body = "OK";
 	});
 
-	server.get("/", async (req, res) => {
+	router.get("/", async (ctx) => {
 		const data = await todos.getAll();
-		res.json(data);
+		ctx.body = data;
 	});
-	server.delete("/", async (req, res) => {
+	router.delete("/", async (ctx) => {
 		await todos.deleteAll();
-		res.sendStatus(204);
+		ctx.status = 204;
 	});
-	server.post("/", async (req, res) => {
+	router.post("/", async (ctx) => {
 		const body = z
 			.object({
 				text: z.string(),
 				completed: z.boolean(),
 			})
-			.safeParse(req.body);
+			.safeParse(ctx.request.body);
 		if (!body.success) {
-			res.status(400).json({ error: body.error });
+			ctx.status = 400;
+			ctx.body = createErrorResponse(body.error);
 			return;
 		}
 
@@ -64,7 +79,8 @@ export const restApi = ({ port, todos, logger }: { port: number; todos: Todos; l
 			todoWithoutId = createTodoWithoutId(body.data.text, body.data.completed);
 		} catch (error) {
 			if (error instanceof TodoTextTooShort || error instanceof TodoTextTooLong) {
-				res.status(400).json(errorResponse(error));
+				ctx.status = 400;
+				ctx.body = createErrorResponse(error);
 				return;
 			} else {
 				throw error;
@@ -72,45 +88,36 @@ export const restApi = ({ port, todos, logger }: { port: number; todos: Todos; l
 		}
 
 		const newTodo = await todos.create(todoWithoutId);
-
-		res.json(newTodo);
+		ctx.body = newTodo;
 	});
 
-	server.get("/:id", async (req, res) => {
-		const params = validateTodoIdParam(req, res);
+	router.get("/:id", async (ctx) => {
+		const params = validateTodoIdParam(ctx);
 		if (params.type === "ERROR") return;
 
 		const todo = await todos.getById(params.id);
 		if (todo) {
-			res.json(todo);
+			ctx.body = todo;
 		} else {
-			res.sendStatus(404);
+			ctx.status = 404;
 		}
 	});
-	server.patch("/:id", (req, res) => {
-		// TODO
-		res.sendStatus(500);
-	});
-	server.delete("/:id", async (req, res) => {
-		const params = validateTodoIdParam(req, res);
+	router.delete("/:id", async (ctx) => {
+		const params = validateTodoIdParam(ctx);
 		if (params.type === "ERROR") return;
+
 		const deleted = await todos.deleteById(params.id);
-		if (deleted) {
-			res.sendStatus(204);
-		} else {
-			res.sendStatus(404);
-		}
+		ctx.status = deleted ? 204 : 404;
+	});
+	router.patch("/:id", (ctx) => {
+		// TODO
+		ctx.status = 500;
 	});
 
-	// Generic error handler
-	// `next` parameter is required because of some magic Express parameters matching
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	server.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-		logger.error(String(error));
-		res.status(500);
-		res.json(errorResponse(error));
-	});
+	server.use(router.routes());
+	server.use(router.allowedMethods());
 
+	// Start server
 	server.listen(port, () => {
 		logger.log(`server running at http://localhost:${port}`);
 	});

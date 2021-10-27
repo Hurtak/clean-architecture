@@ -11,10 +11,10 @@ export type Todo = TodoWithoutId & {
 // Used at the edges of the system before the have Todo saved in the database
 export const createTodoWithoutId = (text: string, completed: boolean): TodoWithoutId => {
 	if (text.length < 1) {
-		throw new TodoTextTooShort("Todo text is too short, minimum length is 1 character.");
+		throw new TodoTextTooShort("Todo text is too short, minimum length is 1 character");
 	}
 	if (text.length > 100) {
-		throw new TodoTextTooLong("Todo text is too long, maximum length is 100 characters.");
+		throw new TodoTextTooLong("Todo text is too long, maximum length is 100 characters");
 	}
 
 	return {
