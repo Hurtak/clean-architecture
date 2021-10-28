@@ -7,7 +7,7 @@ import { ValueFromPromise } from "../../utils/typescript";
 type Sql = string;
 type ValidatorGeneric<T> = z.ZodType<T>;
 type ValidatorResultGeneric<T1, T2 extends ValidatorGeneric<T1>> = z.infer<T2>;
-type QueryParams = { [key: `$${string}`]: string | number | boolean };
+type QueryParams = { [key: `$${string}`]: string | number | boolean | null };
 
 export const storageClient = async () => {
 	const database = await open({

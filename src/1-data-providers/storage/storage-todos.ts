@@ -66,6 +66,28 @@ export const storageTodos = ({ storageClient, logger }: { storageClient: Storage
 		return todo;
 	};
 
+	const patchById = async (id: Todo["id"], partialTodo: Partial<TodoWithoutId>): Promise<boolean> => {
+		logger.verbose(`updating todo ${id}`);
+		await storageClient.mutation(
+			`
+				UPDATE todos
+				SET text = COALESCE($text, text),
+					completed = COALESCE($completed, completed)
+				WHERE id = $id
+			`,
+			{ $id: id, $text: partialTodo.text ?? null, $completed: partialTodo.completed ?? null }
+		);
+
+		const data = await storageClient.queryOne(
+			z.object({ rowsUpdated: z.number() }),
+			`SELECT changes() AS rowsUpdated`
+		);
+		const updated = data ? data.rowsUpdated > 0 : false;
+		logger.verbose(updated ? `updating todo ${id} done` : `updating todo ${id} failed, todo not found`);
+
+		return updated;
+	};
+
 	const deleteAll = async (): Promise<void> => {
 		logger.verbose(`deleting all todos`);
 		await storageClient.mutation(`DELETE FROM todos`);
@@ -79,12 +101,12 @@ export const storageTodos = ({ storageClient, logger }: { storageClient: Storage
 			`,
 			{ $id: id }
 		);
-		const data = await storageClient.queryOne(
-			z.object({ rows_deleted: z.number() }),
-			`SELECT changes() AS rows_deleted`
-		);
 
-		const deleted = data ? data.rows_deleted > 0 : false;
+		const data = await storageClient.queryOne(
+			z.object({ rowsDeleted: z.number() }),
+			`SELECT changes() AS rowsDeleted`
+		);
+		const deleted = data ? data.rowsDeleted > 0 : false;
 		logger.verbose(deleted ? `deleting todo ${id} done` : `deleting todo ${id} failed, todo not found`);
 
 		return deleted;
@@ -94,6 +116,7 @@ export const storageTodos = ({ storageClient, logger }: { storageClient: Storage
 		getAll,
 		getById,
 		create,
+		patchById,
 		deleteAll,
 		deleteById,
 	};

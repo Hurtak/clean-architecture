@@ -12,10 +12,13 @@ export const todos = ({ storage }: { storage: Storage }) => {
 		create: (todoWithoutId: TodoWithoutId): Promise<Todo> => {
 			return storage.todos.create(todoWithoutId);
 		},
-		deleteAll: async (): Promise<void> => {
-			await storage.todos.deleteAll();
+		patchById: (id: Todo["id"], partialTodoWithoutId: Partial<TodoWithoutId>): Promise<boolean> => {
+			return storage.todos.patchById(id, partialTodoWithoutId);
 		},
-		deleteById: async (id: Todo["id"]): Promise<boolean> => {
+		deleteAll: (): Promise<void> => {
+			return storage.todos.deleteAll();
+		},
+		deleteById: (id: Todo["id"]): Promise<boolean> => {
 			return storage.todos.deleteById(id);
 		},
 	};

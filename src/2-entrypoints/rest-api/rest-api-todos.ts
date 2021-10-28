@@ -2,15 +2,23 @@ import { RouterContext } from "@koa/router";
 import { z } from "zod";
 
 import { Todos } from "../../3-use-cases/todos";
-import { createTodoWithoutId, TodoTextTooLong, TodoTextTooShort } from "../../4-entities/todos";
+import {
+	createTodoWithoutId,
+	Todo,
+	TodoTextTooLong,
+	TodoTextTooShort,
+	TodoWithoutId,
+	todoWithoutIdValidator,
+	validateTodo,
+} from "../../4-entities/todos";
 import { createErrorResponse } from "./rest-api-utis";
 
-const validateTodoIdParam = (ctx: RouterContext): { type: "OK"; id: number } | { type: "ERROR" } => {
+const validateTodoIdParam = (ctx: RouterContext): { type: "OK"; id: Todo["id"] } | { type: "ERROR" } => {
 	const paramsValidator = z.object({
 		id: z
 			.string()
 			.nonempty()
-			.regex(/^\d+$/, "ID must be a whole number")
+			.regex(/^\d+$/, "URL Todo ID must be a whole number")
 			.transform((str) => Number(str)),
 	});
 
@@ -22,6 +30,33 @@ const validateTodoIdParam = (ctx: RouterContext): { type: "OK"; id: number } | {
 	}
 
 	return { type: "OK", id: params.data.id };
+};
+
+const validateTodoPartialBody = (
+	ctx: RouterContext
+): { type: "OK"; partialTodo: Partial<TodoWithoutId> } | { type: "ERROR" } => {
+	const body = todoWithoutIdValidator.partial().strict().safeParse(ctx.request.body);
+	if (!body.success) {
+		ctx.status = 400;
+		ctx.body = createErrorResponse(body.error);
+		return { type: "ERROR" };
+	}
+
+	const partialTodo = body.data;
+	try {
+		validateTodo(partialTodo);
+	} catch (error) {
+		// TODO: somehow share this logic with create todo?
+		if (error instanceof TodoTextTooShort || error instanceof TodoTextTooLong) {
+			ctx.status = 400;
+			ctx.body = createErrorResponse(error);
+			return { type: "ERROR" };
+		} else {
+			throw error;
+		}
+	}
+
+	return { type: "OK", partialTodo };
 };
 
 export const restApiTodos = ({ todos }: { todos: Todos }) => {
@@ -83,12 +118,15 @@ export const restApiTodos = ({ todos }: { todos: Todos }) => {
 			const deleted = await todos.deleteById(params.id);
 			ctx.status = deleted ? 204 : 404;
 		},
-		patchById: (ctx: RouterContext) => {
+		patchById: async (ctx: RouterContext) => {
 			const params = validateTodoIdParam(ctx);
 			if (params.type === "ERROR") return;
 
-			// TODO
-			ctx.status = 500;
+			const body = validateTodoPartialBody(ctx);
+			if (body.type === "ERROR") return;
+
+			const updated = await todos.patchById(params.id, body.partialTodo);
+			ctx.status = updated ? 204 : 404;
 		},
 	};
 };
