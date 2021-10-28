@@ -2,13 +2,7 @@ import { RouterContext } from "@koa/router";
 import { z } from "zod";
 
 import { Todos } from "../../3-use-cases/todos";
-import {
-	Todo,
-	TodoWithoutId,
-	TodoWithoutIdPartial,
-	todoWithoutIdPartialValidator,
-	todoWithoutIdValidator,
-} from "../../4-entities/todos";
+import { Todo, TodoWithoutId, todoWithoutIdValidator } from "../../4-entities/todos";
 import { createErrorResponse } from "./rest-api-utis";
 
 const validateTodoIdParam = (ctx: RouterContext): { type: "OK"; data: Todo["id"] } | { type: "ERROR" } => {
@@ -30,6 +24,8 @@ const validateTodoIdParam = (ctx: RouterContext): { type: "OK"; data: Todo["id"]
 	return { type: "OK", data: params.data.id };
 };
 
+const todoWithoutIdPartialValidator = todoWithoutIdValidator.partial();
+type TodoWithoutIdPartial = z.infer<typeof todoWithoutIdPartialValidator>;
 const validateTodoPartialBody = (
 	ctx: RouterContext
 ): { type: "OK"; data: TodoWithoutIdPartial } | { type: "ERROR" } => {
