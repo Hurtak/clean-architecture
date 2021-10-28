@@ -25,8 +25,8 @@
 
 ## Remaining work
 
--   return the deleted/patched resource?
 -   from/to ports, every edge of system (db & api) should have mapping of from/to entities
+-   Zod error should not get leaked?
 -   maybe add something more so we have more than one of each in the use case?
 -   400 (JSON parse error) & 404 should return JSON as a response?
 -   exceptions or maybe type?

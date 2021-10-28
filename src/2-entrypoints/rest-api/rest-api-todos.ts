@@ -84,8 +84,12 @@ export const restApiTodos = ({ todos }: { todos: Todos }) => {
 			const idParsed = validateTodoIdParam(ctx);
 			if (idParsed.type === "ERROR") return;
 
-			const deleted = await todos.deleteById(idParsed.data);
-			ctx.status = deleted ? 204 : 404;
+			const todo = await todos.deleteById(idParsed.data);
+			if (todo) {
+				ctx.body = todo;
+			} else {
+				ctx.status = 404;
+			}
 		},
 		patchById: async (ctx: RouterContext) => {
 			const idParsed = validateTodoIdParam(ctx);
@@ -94,8 +98,12 @@ export const restApiTodos = ({ todos }: { todos: Todos }) => {
 			const todoWithoutIdPartialParsed = validateTodoPartialBody(ctx);
 			if (todoWithoutIdPartialParsed.type === "ERROR") return;
 
-			const updated = await todos.patchById(idParsed.data, todoWithoutIdPartialParsed.data);
-			ctx.status = updated ? 204 : 404;
+			const todo = await todos.patchById(idParsed.data, todoWithoutIdPartialParsed.data);
+			if (todo) {
+				ctx.body = todo;
+			} else {
+				ctx.status = 404;
+			}
 		},
 	};
 };
