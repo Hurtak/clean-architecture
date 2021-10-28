@@ -1,44 +1,24 @@
 import KoaRouter from "@koa/router";
 import Koa from "koa";
 import koaBodyParser from "koa-bodyparser";
-import { z } from "zod";
 
 import { Logger } from "../../1-data-providers/logger";
 import { Todos } from "../../3-use-cases/todos";
-import { createTodoWithoutId, TodoTextTooLong, TodoTextTooShort } from "../../4-entities/todos";
-import { createErrorResponse } from "./rest-api-utis";
-
-const validateTodoIdParam = (ctx: KoaRouter.RouterContext): { type: "OK"; id: number } | { type: "ERROR" } => {
-	const paramsValidator = z.object({
-		id: z
-			.string()
-			.nonempty()
-			.regex(/^\d+$/, "ID must be a whole number")
-			.transform((str) => Number(str)),
-	});
-
-	const params = paramsValidator.safeParse(ctx.params);
-	if (!params.success) {
-		ctx.status = 400;
-		ctx.body = createErrorResponse(params.error);
-		return { type: "ERROR" };
-	}
-
-	return { type: "OK", id: params.data.id };
-};
+import { restApiTodos } from "./rest-api-todos";
 
 export const restApi = ({ port, todos, logger }: { port: number; todos: Todos; logger: Logger }): void => {
 	const server = new Koa();
 	const router = new KoaRouter();
+	const restApiTodosInstance = restApiTodos({ todos });
 
-	// Middlewares
+	// Middlewares before routes
 	server.use(koaBodyParser({ enableTypes: ["json"] }));
 
-	const formatBody = (body: unknown): string => JSON.stringify(body)?.slice(0, 100) ?? "";
+	const formatLogOutput = (body: unknown): string => JSON.stringify(body)?.slice(0, 100) ?? "";
 	server.use(async (ctx, next) => {
-		logger.log(`-> ${ctx.method} ${ctx.url} req ${formatBody(ctx.request.body)}`);
+		logger.log(`-> ${ctx.method} ${ctx.url} req ${formatLogOutput(ctx.request.body)}`);
 		await next();
-		logger.log(`<- ${ctx.method} ${ctx.url} res  ${ctx.status} ${formatBody(ctx.body)}`);
+		logger.log(`<- ${ctx.method} ${ctx.url} res  ${ctx.status} ${formatLogOutput(ctx.body)}`);
 	});
 
 	// Routes
@@ -46,70 +26,15 @@ export const restApi = ({ port, todos, logger }: { port: number; todos: Todos; l
 		ctx.body = "OK";
 	});
 
-	router.get("/", async (ctx) => {
-		const data = await todos.getAll();
-		ctx.body = data;
-	});
-	router.delete("/", async (ctx) => {
-		await todos.deleteAll();
-		ctx.status = 204;
-	});
-	router.post("/", async (ctx) => {
-		const body = z
-			.object({
-				text: z.string(),
-				completed: z.boolean(),
-			})
-			.safeParse(ctx.request.body);
-		if (!body.success) {
-			ctx.status = 400;
-			ctx.body = createErrorResponse(body.error);
-			return;
-		}
+	router.get("/", restApiTodosInstance.getAll);
+	router.post("/", restApiTodosInstance.create);
+	router.delete("/", restApiTodosInstance.deleteAll);
 
-		let todoWithoutId;
-		try {
-			todoWithoutId = createTodoWithoutId(body.data.text, body.data.completed);
-		} catch (error) {
-			if (error instanceof TodoTextTooShort || error instanceof TodoTextTooLong) {
-				ctx.status = 400;
-				ctx.body = createErrorResponse(error);
-				return;
-			} else {
-				throw error;
-			}
-		}
+	router.get("/:id", restApiTodosInstance.getById);
+	router.patch("/:id", restApiTodosInstance.patchById);
+	router.delete("/:id", restApiTodosInstance.deleteById);
 
-		const newTodo = await todos.create(todoWithoutId);
-		ctx.body = newTodo;
-	});
-
-	router.get("/:id", async (ctx) => {
-		const params = validateTodoIdParam(ctx);
-		if (params.type === "ERROR") return;
-
-		const todo = await todos.getById(params.id);
-		if (todo) {
-			ctx.body = todo;
-		} else {
-			ctx.status = 404;
-		}
-	});
-	router.delete("/:id", async (ctx) => {
-		const params = validateTodoIdParam(ctx);
-		if (params.type === "ERROR") return;
-
-		const deleted = await todos.deleteById(params.id);
-		ctx.status = deleted ? 204 : 404;
-	});
-	router.patch("/:id", (ctx) => {
-		const params = validateTodoIdParam(ctx);
-		if (params.type === "ERROR") return;
-
-		// TODO
-		ctx.status = 500;
-	});
-
+	// Middlewares after routes
 	server.use(router.routes());
 	server.use(router.allowedMethods());
 
