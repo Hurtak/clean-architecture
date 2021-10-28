@@ -1,21 +1,14 @@
 import KoaRouter from "@koa/router";
 import Koa from "koa";
 import koaBodyParser from "koa-bodyparser";
-import { z, ZodError } from "zod";
+import { z } from "zod";
 
 import { Logger } from "../../1-data-providers/logger";
 import { Todos } from "../../3-use-cases/todos";
 import { createTodoWithoutId, TodoTextTooLong, TodoTextTooShort } from "../../4-entities/todos";
+import { createErrorResponse } from "./rest-api-utis";
 
-const createErrorResponse = (error: Error | ZodError) => {
-	if (error instanceof ZodError) {
-		return { error: { name: "ValidationError", message: "Invalid shape the request data", issues: error.issues } };
-	}
-
-	return { error: { name: error.name, message: error.message } };
-};
-
-const validateTodoIdParam = (ctx: KoaRouter.RouterContext): { type: "ERROR" } | { type: "OK"; id: number } => {
+const validateTodoIdParam = (ctx: KoaRouter.RouterContext): { type: "OK"; id: number } | { type: "ERROR" } => {
 	const paramsValidator = z.object({
 		id: z
 			.string()
@@ -110,6 +103,9 @@ export const restApi = ({ port, todos, logger }: { port: number; todos: Todos; l
 		ctx.status = deleted ? 204 : 404;
 	});
 	router.patch("/:id", (ctx) => {
+		const params = validateTodoIdParam(ctx);
+		if (params.type === "ERROR") return;
+
 		// TODO
 		ctx.status = 500;
 	});
