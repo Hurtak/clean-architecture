@@ -22,12 +22,19 @@
 -   https://www.freecodecamp.org/news/a-quick-introduction-to-clean-architecture-990c014448d2/
 -   https://github.com/mattia-battiston/clean-architecture-example
 
-## TODOs
+## Remaining work
 
--   patch route
+-   TodoWithoutId maybe at 2-use-cases since it is not core of the system?
+-   zod is .strict by default?
+-   return the deleted/patched resource?
+-   from/to ports, every edge of system (db & api) should have mapping of from/to entities
 -   maybe add something more so we have more than one of each in the use case?
 -   exceptions or maybe type?
     -   if (error instanceof TodoTextTooShort || error instanceof TodoTextTooLong) {
+
+## Nice to have
+
+-   make sure everything is really JSON based, even 404, 400, 500 responses?
 -   tests?
 -   cleanup
     -   handle TODOs
