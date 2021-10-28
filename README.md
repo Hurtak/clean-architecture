@@ -28,13 +28,14 @@
 -   from/to ports, every edge of system (db & api) should have mapping of from/to entities
 -   Zod error should not get leaked?
 -   maybe add something more so we have more than one of each in the use case?
--   400 (JSON parse error) & 404 should return JSON as a response?
--   exceptions or maybe type?
-    -   if (error instanceof TodoTextTooShort || error instanceof TodoTextTooLong) {
 
 ## Nice to have
 
--   make sure everything is really JSON based, even 404, 400, 500 responses?
+-   400 (JSON parse error) & 404 should return JSON as a response?
+-   make sure every response is JSON bases
+    -   400 JSON parse error is text
+    -   404 is text
+    -   500 is text
 -   tests?
 -   cleanup
     -   handle TODOs
