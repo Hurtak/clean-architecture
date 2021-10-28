@@ -8,6 +8,7 @@
 
 ## Problems/Questions
 
+-   is `TodoWithoutId` really entity (core business type) or should it be higher, like in use-cases?
 -   There is import of types from outer layers to inner ones.
     -   For example `3-use-case/todos` imports `1-data-providers/storage` which is violation of the rule that dependencies flow only inward. The dependency itself flows inward (the storage is dependency injected) byt the type definition import violates this.
 -   Since `1-data-providers` can be also communication with 3rd party services that do not provide data, eg send email service, maybe this should be named differently?
@@ -24,11 +25,10 @@
 
 ## Remaining work
 
--   TodoWithoutId maybe at 2-use-cases since it is not core of the system?
--   zod is .strict by default?
 -   return the deleted/patched resource?
 -   from/to ports, every edge of system (db & api) should have mapping of from/to entities
 -   maybe add something more so we have more than one of each in the use case?
+-   400 (JSON parse error) & 404 should return JSON as a response?
 -   exceptions or maybe type?
     -   if (error instanceof TodoTextTooShort || error instanceof TodoTextTooLong) {
 
