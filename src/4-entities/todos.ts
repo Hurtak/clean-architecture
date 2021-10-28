@@ -1,11 +1,13 @@
 import { z } from "zod";
 
 // Core types
-export const todoValidator = z.object({
-	id: z.number(),
-	text: z.string().min(1).max(100),
-	completed: z.boolean(),
-});
+export const todoValidator = z
+	.object({
+		id: z.number(),
+		text: z.string().min(1).max(100),
+		completed: z.boolean(),
+	})
+	.strict();
 export type Todo = z.infer<typeof todoValidator>;
 
 // Used at the edges of the system

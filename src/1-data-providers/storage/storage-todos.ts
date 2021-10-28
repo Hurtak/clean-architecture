@@ -4,11 +4,13 @@ import { Todo, todoValidator, TodoWithoutId } from "../../4-entities/todos";
 import { Logger } from "../logger";
 import { StorageClient } from "./storage-client";
 
-const todoDatabaseValidator = z.object({
-	id: z.number(),
-	text: z.string(),
-	completed: z.number(),
-});
+const todoDatabaseValidator = z
+	.object({
+		id: z.number(),
+		text: z.string(),
+		completed: z.number(),
+	})
+	.strict();
 type TodoDatabase = z.infer<typeof todoDatabaseValidator>;
 
 const todoDatabaseToTodo = (todoDatabase: TodoDatabase): Todo =>
@@ -54,7 +56,7 @@ export const storageTodos = ({ storageClient, logger }: { storageClient: Storage
 			{ $text: todoWithoutId.text, $completed: todoWithoutId.completed }
 		);
 		const data = await storageClient.queryOneAlwaysResult(
-			z.object({ id: z.number() }),
+			z.object({ id: z.number() }).strict(),
 			`SELECT last_insert_rowid() AS id`
 		);
 		const todo = await getById(data.id);
@@ -79,7 +81,7 @@ export const storageTodos = ({ storageClient, logger }: { storageClient: Storage
 		);
 
 		const data = await storageClient.queryOne(
-			z.object({ rowsUpdated: z.number() }),
+			z.object({ rowsUpdated: z.number() }).strict(),
 			`SELECT changes() AS rowsUpdated`
 		);
 		const updated = data ? data.rowsUpdated > 0 : false;
@@ -103,7 +105,7 @@ export const storageTodos = ({ storageClient, logger }: { storageClient: Storage
 		);
 
 		const data = await storageClient.queryOne(
-			z.object({ rowsDeleted: z.number() }),
+			z.object({ rowsDeleted: z.number() }).strict(),
 			`SELECT changes() AS rowsDeleted`
 		);
 		const deleted = data ? data.rowsDeleted > 0 : false;

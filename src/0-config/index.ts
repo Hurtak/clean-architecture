@@ -1,9 +1,11 @@
 import configLoader from "config";
 import { z } from "zod";
 
-const configValidator = z.object({
-	port: z.number(),
-});
+const configValidator = z
+	.object({
+		port: z.number(),
+	})
+	.strict();
 
 export type Config = z.infer<typeof configValidator>;
 
