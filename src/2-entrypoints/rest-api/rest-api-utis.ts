@@ -8,7 +8,7 @@ export type ErrorResponse = {
 	};
 };
 
-export const createErrorResponse = (error: Error | ZodError): ErrorResponse => {
+export const createErrorResponse = (error: unknown): ErrorResponse => {
 	if (error instanceof ZodError) {
 		return {
 			error: {
@@ -17,12 +17,20 @@ export const createErrorResponse = (error: Error | ZodError): ErrorResponse => {
 				additionalData: error.issues,
 			},
 		};
+	} else if (error instanceof Error) {
+		return {
+			error: {
+				name: error.name,
+				message: error.message,
+			},
+		};
 	}
 
 	return {
 		error: {
-			name: error.name,
-			message: error.message,
+			name: "UnknownError",
+			message: "Unknown error",
+			additionalData: error,
 		},
 	};
 };
