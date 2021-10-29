@@ -16,9 +16,8 @@
 
 ## Remaining work
 
--   params: unknown, body: unknown
--   Zod error should not get leaked?
--   maybe add something more so we have more than one of each in the use case?
+-   Maybe Zod validation errors should not get returned directly by API in `additonalData` but transformed to out own data type in api-ports?
+-   Maybe add more than one thing in the use-case, something like dummy email service? So we have more than one of each in the use case?
 
 ## Nice to have
 
