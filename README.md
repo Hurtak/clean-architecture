@@ -1,10 +1,15 @@
 # Clean architecture example
 
 -   Example repository implementing the Clean architecture concepts
+
     -   API spec is from https://www.todobackend.com/
     -   Language: TypeScript
     -   Web server: Express
     -   Database: SQLite (in memory)
+
+## My current understanding of clean architecture
+
+![Clean architecture diagram](./diagram.png)
 
 ## Problems/Questions
 
