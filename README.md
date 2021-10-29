@@ -21,6 +21,8 @@
 
 ## Remaining work
 
+-   move zod from 4-entities?
+-   wrap zod ?
 -   Maybe Zod validation errors should not get returned directly by API in `additionalData` but transformed to out own data type in api-ports?
 -   Maybe add more than one thing in the use-case, something like dummy email service? So we have more than one of each in the use case?
 
