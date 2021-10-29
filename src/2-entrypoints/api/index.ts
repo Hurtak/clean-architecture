@@ -4,13 +4,13 @@ import koaBodyParser from "koa-bodyparser";
 
 import { Logger } from "../../1-data-providers/logger";
 import { Todos } from "../../3-use-cases/todos";
-import { restApiTodos } from "./rest-api-todos";
-import { apiResponseApply } from "./rest-api-utis";
+import { apiTodos } from "./api-todos";
+import { apiResponseApply } from "./api-utis";
 
-export const restApi = ({ port, todos, logger }: { port: number; todos: Todos; logger: Logger }): void => {
+export const api = ({ port, todos, logger }: { port: number; todos: Todos; logger: Logger }): void => {
 	const server = new Koa();
 	const router = new KoaRouter();
-	const apiTodos = restApiTodos({ todos });
+	const apiTodosInstance = apiTodos({ todos });
 
 	// Middlewares before routes
 	server.use(koaBodyParser({ enableTypes: ["json"] }));
@@ -27,15 +27,15 @@ export const restApi = ({ port, todos, logger }: { port: number; todos: Todos; l
 		ctx.body = "OK";
 	});
 
-	router.get("/", (ctx) => apiTodos.getAll().then((res) => apiResponseApply(ctx, res)));
-	router.post("/", (ctx) => apiTodos.create(ctx.request.body).then((res) => apiResponseApply(ctx, res)));
-	router.delete("/", (ctx) => apiTodos.deleteAll().then((res) => apiResponseApply(ctx, res)));
+	router.get("/", (ctx) => apiTodosInstance.getAll().then((res) => apiResponseApply(ctx, res)));
+	router.post("/", (ctx) => apiTodosInstance.create(ctx.request.body).then((res) => apiResponseApply(ctx, res)));
+	router.delete("/", (ctx) => apiTodosInstance.deleteAll().then((res) => apiResponseApply(ctx, res)));
 
-	router.get("/:id", (ctx) => apiTodos.getById(ctx.params).then((res) => apiResponseApply(ctx, res)));
+	router.get("/:id", (ctx) => apiTodosInstance.getById(ctx.params).then((res) => apiResponseApply(ctx, res)));
 	router.patch("/:id", (ctx) =>
-		apiTodos.patchById(ctx.params, ctx.request.body).then((res) => apiResponseApply(ctx, res))
+		apiTodosInstance.patchById(ctx.params, ctx.request.body).then((res) => apiResponseApply(ctx, res))
 	);
-	router.delete("/:id", (ctx) => apiTodos.deleteById(ctx.params).then((res) => apiResponseApply(ctx, res)));
+	router.delete("/:id", (ctx) => apiTodosInstance.deleteById(ctx.params).then((res) => apiResponseApply(ctx, res)));
 
 	// Middlewares after routes
 	server.use(router.routes());

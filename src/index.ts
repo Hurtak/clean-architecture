@@ -1,7 +1,7 @@
 import { config } from "./0-config";
 import { logger } from "./1-data-providers/logger";
 import { storage } from "./1-data-providers/storage";
-import { restApi } from "./2-entrypoints/rest-api";
+import { api } from "./2-entrypoints/api";
 import { todos } from "./3-use-cases/todos";
 
 const main = async (): Promise<void> => {
@@ -16,7 +16,7 @@ const main = async (): Promise<void> => {
 		storage: storageInstance,
 	});
 
-	restApi({
+	api({
 		port: configInstance.port,
 		todos: todosInstance,
 		logger: logger({ prefix: "api" }),

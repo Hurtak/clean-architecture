@@ -5,10 +5,10 @@ import {
 	validateApiTodoId,
 	validateApiTodoWithoutId,
 	validateApiTodoWithoutIdPartial,
-} from "./rest-api-todos-ports";
-import { ApiResponse } from "./rest-api-utis";
+} from "./api-todos-ports";
+import { ApiResponse } from "./api-utis";
 
-export const restApiTodos = ({ todos }: { todos: Todos }) => {
+export const apiTodos = ({ todos }: { todos: Todos }) => {
 	return {
 		getAll: async (): Promise<ApiResponse<ApiTodo[]>> => {
 			const allTodos = await todos.getAll();

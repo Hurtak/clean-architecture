@@ -17,7 +17,6 @@
 ## Remaining work
 
 -   params: unknown, body: unknown
--   restApi -> api?
 -   Zod error should not get leaked?
 -   maybe add something more so we have more than one of each in the use case?
 

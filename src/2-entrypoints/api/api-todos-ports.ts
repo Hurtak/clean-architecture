@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { Todo, TodoWithoutId, todoWithoutIdValidator } from "../../4-entities/todos";
-import { ApiRequestValidation, createErrorResponse } from "./rest-api-utis";
+import { ApiRequestValidation, createErrorResponse } from "./api-utis";
 
 export type ApiTodo = {
 	id: number;
