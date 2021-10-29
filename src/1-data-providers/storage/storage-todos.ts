@@ -1,20 +1,9 @@
 import { z } from "zod";
 
-import { Todo, todoValidator, TodoWithoutId } from "../../4-entities/todos";
+import { Todo, TodoWithoutId } from "../../4-entities/todos";
 import { Logger } from "../logger";
 import { StorageClient } from "./storage-client";
-
-const todoDatabaseValidator = z
-	.object({
-		id: z.number(),
-		text: z.string(),
-		completed: z.number(),
-	})
-	.strict();
-type TodoDatabase = z.infer<typeof todoDatabaseValidator>;
-
-const todoDatabaseToTodo = (todoDatabase: TodoDatabase): Todo =>
-	todoValidator.parse({ id: todoDatabase.id, text: todoDatabase.text, completed: Boolean(todoDatabase.completed) });
+import { todoDatabaseToTodo, todoDatabaseValidator } from "./storage-todos-ports";
 
 export const storageTodos = ({ storageClient, logger }: { storageClient: StorageClient; logger: Logger }) => {
 	const getAll = async (): Promise<Todo[]> => {

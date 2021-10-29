@@ -1,4 +1,10 @@
+import { RouterContext } from "@koa/router";
 import { ZodError } from "zod";
+
+type ApiResponseError = { status: 400; body: ErrorResponse } | { status: 404 };
+export type ApiResponse<T> = { status: 200; body: T } | { status: 204 } | ApiResponseError;
+
+export type ApiRequestValidation<T> = { type: "VALID"; data: T } | { type: "INVALID"; body: ApiResponseError };
 
 export type ErrorResponse = {
 	error: {
@@ -33,4 +39,11 @@ export const createErrorResponse = (error: unknown): ErrorResponse => {
 			additionalData: error,
 		},
 	};
+};
+
+export const apiResponseApply = <T>(ctx: RouterContext, apiResponse: ApiResponse<T>): void => {
+	ctx.status = apiResponse.status;
+	if ("body" in apiResponse) {
+		ctx.body = apiResponse.body;
+	}
 };
