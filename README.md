@@ -16,16 +16,15 @@
 
 ## Remaining work
 
--   Maybe Zod validation errors should not get returned directly by API in `additonalData` but transformed to out own data type in api-ports?
+-   Maybe Zod validation errors should not get returned directly by API in `additionalData` but transformed to out own data type in api-ports?
 -   Maybe add more than one thing in the use-case, something like dummy email service? So we have more than one of each in the use case?
 
 ## Nice to have
 
--   400 (JSON parse error) & 404 should return JSON as a response?
--   make sure every response is JSON bases
-    -   400 JSON parse error is text
-    -   404 is text
-    -   500 is text
+-   make sure every response is JSON based
+    -   400 JSON parse error response is a text
+    -   404 response is a text
+    -   500 response is a text
 -   add tests
 
 ## Related articles links
