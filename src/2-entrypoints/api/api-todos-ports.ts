@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { Todo, TodoWithoutId, todoWithoutIdValidator } from "../../4-entities/todos";
-import { ApiRequestValidation, createErrorResponse } from "./api-utis";
+import { ApiRequestBody, ApiRequestParams, ApiRequestValidation, createErrorResponse } from "./api-utis";
 
 export type ApiTodo = {
 	id: number;
@@ -14,7 +14,7 @@ export const todoToApiTodo = (todo: Todo): ApiTodo => ({
 	completed: todo.completed,
 });
 
-export const validateApiTodoId = (params: unknown): ApiRequestValidation<Todo["id"]> => {
+export const validateApiTodoId = (params: ApiRequestParams): ApiRequestValidation<Todo["id"]> => {
 	const paramsValidator = z.object({
 		id: z
 			.string()
@@ -33,7 +33,7 @@ export const validateApiTodoId = (params: unknown): ApiRequestValidation<Todo["i
 
 const todoWithoutIdPartialValidator = todoWithoutIdValidator.partial();
 type TodoWithoutIdPartial = z.infer<typeof todoWithoutIdPartialValidator>;
-export const validateApiTodoWithoutIdPartial = (body: unknown): ApiRequestValidation<TodoWithoutIdPartial> => {
+export const validateApiTodoWithoutIdPartial = (body: ApiRequestBody): ApiRequestValidation<TodoWithoutIdPartial> => {
 	const todoWithoutIdPartial = todoWithoutIdPartialValidator.safeParse(body);
 	if (!todoWithoutIdPartial.success) {
 		return { type: "INVALID", body: { status: 400, body: createErrorResponse(todoWithoutIdPartial.error) } };
@@ -42,7 +42,7 @@ export const validateApiTodoWithoutIdPartial = (body: unknown): ApiRequestValida
 	return { type: "VALID", data: todoWithoutIdPartial.data };
 };
 
-export const validateApiTodoWithoutId = (body: unknown): ApiRequestValidation<TodoWithoutId> => {
+export const validateApiTodoWithoutId = (body: ApiRequestBody): ApiRequestValidation<TodoWithoutId> => {
 	const todoWithoutIdParsed = todoWithoutIdValidator.safeParse(body);
 	if (!todoWithoutIdParsed.success) {
 		return { type: "INVALID", body: { status: 400, body: createErrorResponse(todoWithoutIdParsed.error) } };

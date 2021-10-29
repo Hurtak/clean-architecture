@@ -6,6 +6,9 @@ export type ApiResponse<T> = { status: 200; body: T } | { status: 204 } | ApiRes
 
 export type ApiRequestValidation<T> = { type: "VALID"; data: T } | { type: "INVALID"; body: ApiResponseError };
 
+export type ApiRequestParams = Record<string, string>;
+export type ApiRequestBody = unknown;
+
 export type ErrorResponse = {
 	error: {
 		name: string;

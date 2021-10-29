@@ -6,7 +6,7 @@ import {
 	validateApiTodoWithoutId,
 	validateApiTodoWithoutIdPartial,
 } from "./api-todos-ports";
-import { ApiResponse } from "./api-utis";
+import { ApiRequestBody, ApiRequestParams, ApiResponse } from "./api-utis";
 
 export const apiTodos = ({ todos }: { todos: Todos }) => {
 	return {
@@ -20,7 +20,7 @@ export const apiTodos = ({ todos }: { todos: Todos }) => {
 			return { status: 204 };
 		},
 
-		create: async (body: unknown): Promise<ApiResponse<ApiTodo>> => {
+		create: async (body: ApiRequestBody): Promise<ApiResponse<ApiTodo>> => {
 			const apiTodo = validateApiTodoWithoutId(body);
 			if (apiTodo.type === "INVALID") return apiTodo.body;
 
@@ -28,21 +28,21 @@ export const apiTodos = ({ todos }: { todos: Todos }) => {
 			return { status: 200, body: newTodo };
 		},
 
-		getById: async (params: unknown): Promise<ApiResponse<ApiTodo>> => {
+		getById: async (params: ApiRequestParams): Promise<ApiResponse<ApiTodo>> => {
 			const apiId = validateApiTodoId(params);
 			if (apiId.type === "INVALID") return apiId.body;
 
 			const todo = await todos.getById(apiId.data);
 			return todo ? { status: 200, body: todoToApiTodo(todo) } : { status: 404 };
 		},
-		deleteById: async (params: unknown): Promise<ApiResponse<ApiTodo>> => {
+		deleteById: async (params: ApiRequestParams): Promise<ApiResponse<ApiTodo>> => {
 			const apiId = validateApiTodoId(params);
 			if (apiId.type === "INVALID") return apiId.body;
 
 			const todo = await todos.deleteById(apiId.data);
 			return todo ? { status: 200, body: todoToApiTodo(todo) } : { status: 404 };
 		},
-		patchById: async (params: unknown, body: unknown): Promise<ApiResponse<ApiTodo>> => {
+		patchById: async (params: ApiRequestParams, body: ApiRequestBody): Promise<ApiResponse<ApiTodo>> => {
 			const apiId = validateApiTodoId(params);
 			if (apiId.type === "INVALID") return apiId.body;
 
