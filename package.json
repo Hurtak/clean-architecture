@@ -22,7 +22,7 @@
 		"zod": "3.11.6"
 	},
 	"devDependencies": {
-		"@types/config": "0.0.39",
+		"@types/config": "0.0.40",
 		"@types/koa": "2.13.4",
 		"@types/koa__router": "8.0.8",
 		"@types/koa-bodyparser": "4.3.3",
