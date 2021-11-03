@@ -13,6 +13,7 @@
 
 ## Problems/Questions
 
+-   you have your todo business entities defined in terms of a third party validation library. Generally speaking, entity models should have 0 dependencies, or dependencies on incredibly stable libraries like a language standard library or a utility belt library.
 -   is `TodoWithoutId` really entity (core business type) or should it be higher, like in use-cases (it is need in use-cases but it does not feel like it belongs there)?
 -   There is import of types from outer layers to inner ones.
     -   For example `3-use-case/todos` imports `1-data-providers/storage` which is violation of the rule that dependencies flow only inward. The dependency itself flows inward (the storage is dependency injected) byt the type definition import violates this.
