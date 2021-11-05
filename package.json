@@ -24,7 +24,7 @@
 	"devDependencies": {
 		"@types/config": "0.0.40",
 		"@types/koa": "2.13.4",
-		"@types/koa__router": "8.0.8",
+		"@types/koa__router": "8.0.9",
 		"@types/koa-bodyparser": "4.3.4",
 		"@types/node": "16.11.6",
 		"@types/sqlite3": "3.1.7",
