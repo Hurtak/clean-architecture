@@ -1,15 +1,42 @@
-import { z } from "zod";
-
 // Core types
-export const todoValidator = z
-	.object({
-		id: z.number(),
-		text: z.string().min(1).max(100),
-		completed: z.boolean(),
-	})
-	.strict();
-export type Todo = z.infer<typeof todoValidator>;
+
+export type Todo = {
+	id: number;
+	text: string;
+	completed: boolean;
+};
+
+export const createTodo = (id: number, text: string, completed: boolean): Todo | Error =>
+	validateTodoProperties({
+		id,
+		text,
+		completed,
+	});
 
 // Used at the edges of the system
-export const todoWithoutIdValidator = todoValidator.omit({ id: true });
-export type TodoWithoutId = z.infer<typeof todoWithoutIdValidator>;
+
+export type TodoWithoutId = Omit<Todo, "id">;
+
+export const createTodoWithoutId = (text: string, completed: boolean): TodoWithoutId | Error =>
+	validateTodoProperties({
+		text,
+		completed,
+	});
+
+// Validation
+
+export const validateTodoProperties = <T extends Todo | Partial<Todo>>(todo: T): T | Error => {
+	if (todo.text) {
+		if (todo.text.length < 1) {
+			return new TodoTextTooShort("Todo text is too short, minimum text.length is 1 character");
+		}
+		if (todo.text.length > 100) {
+			return new TodoTextTooLong("Todo text is too long, maximum length is 100 characters");
+		}
+	}
+
+	return todo;
+};
+
+export class TodoTextTooShort extends Error {}
+export class TodoTextTooLong extends Error {}

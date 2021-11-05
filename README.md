@@ -13,8 +13,7 @@
 
 ## Problems/Questions
 
--   you have your todo business entities defined in terms of a third party validation library. Generally speaking, entity models should have 0 dependencies, or dependencies on incredibly stable libraries like a language standard library or a utility belt library.
--   is `TodoWithoutId` really entity (core business type) or should it be higher, like in use-cases (it is need in use-cases but it does not feel like it belongs there)?
+-   Is `TodoWithoutId` really entity (core business type) or should it be higher, like in use-cases (it is need in use-cases but it does not feel like it belongs there)?
 -   There is import of types from outer layers to inner ones.
     -   For example `3-use-case/todos` imports `1-data-providers/storage` which is violation of the rule that dependencies flow only inward. The dependency itself flows inward (the storage is dependency injected) byt the type definition import violates this.
 -   Since `1-data-providers` can be also communication with 3rd party services that do not provide data, eg send email service, maybe this should be named differently?
@@ -22,7 +21,6 @@
 
 ## Remaining work
 
--   move zod from 4-entities?
 -   wrap zod ?
 -   Maybe Zod validation errors should not get returned directly by API in `additionalData` but transformed to out own data type in api-ports?
 -   Maybe add more than one thing in the use-case, something like dummy email service? So we have more than one of each in the use case?

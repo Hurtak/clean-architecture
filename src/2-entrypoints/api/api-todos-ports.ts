@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { Todo, TodoWithoutId, todoWithoutIdValidator } from "../../4-entities/todos";
+import { createTodoWithoutId, Todo, TodoWithoutId, validateTodoProperties } from "../../4-entities/todos";
 import { ApiRequestBody, ApiRequestParams, ApiRequestValidation, createErrorResponse } from "./api-utis";
 
 export type ApiTodo = {
@@ -8,11 +8,39 @@ export type ApiTodo = {
 	text: string;
 	completed: boolean;
 };
+export type ApiTodoWithoutId = Omit<ApiTodo, "id">;
 export const todoToApiTodo = (todo: Todo): ApiTodo => ({
 	id: todo.id,
 	text: todo.text,
 	completed: todo.completed,
 });
+
+const validatorApiTodoWithoutId = z
+	.object({
+		text: z.string(),
+		completed: z.boolean(),
+	})
+	.strict();
+
+const apiBodyToTodoWithoutId = (body: ApiRequestBody): TodoWithoutId | Error => {
+	const parsed = validatorApiTodoWithoutId.safeParse(body);
+	if (parsed.success) {
+		return createTodoWithoutId(parsed.data.text, parsed.data.completed);
+	} else {
+		return parsed.error;
+	}
+};
+const apiBodyToPartialTodoWithoutId = (body: ApiRequestBody): Partial<TodoWithoutId> | Error => {
+	const parsed = validatorApiTodoWithoutId.partial().safeParse(body);
+	if (parsed.success) {
+		return validateTodoProperties({
+			text: parsed.data.text,
+			completed: parsed.data.completed,
+		});
+	} else {
+		return parsed.error;
+	}
+};
 
 export const validateApiTodoId = (params: ApiRequestParams): ApiRequestValidation<Todo["id"]> => {
 	const paramsValidator = z.object({
@@ -31,22 +59,20 @@ export const validateApiTodoId = (params: ApiRequestParams): ApiRequestValidatio
 	return { type: "VALID", data: paramsParsed.data.id };
 };
 
-const todoWithoutIdPartialValidator = todoWithoutIdValidator.partial();
-type TodoWithoutIdPartial = z.infer<typeof todoWithoutIdPartialValidator>;
-export const validateApiTodoWithoutIdPartial = (body: ApiRequestBody): ApiRequestValidation<TodoWithoutIdPartial> => {
-	const todoWithoutIdPartial = todoWithoutIdPartialValidator.safeParse(body);
-	if (!todoWithoutIdPartial.success) {
-		return { type: "INVALID", body: { status: 400, body: createErrorResponse(todoWithoutIdPartial.error) } };
+export const validateApiTodoWithoutIdPartial = (body: ApiRequestBody): ApiRequestValidation<Partial<TodoWithoutId>> => {
+	const todoWithoutIdPartial = apiBodyToPartialTodoWithoutId(body);
+	if (todoWithoutIdPartial instanceof Error) {
+		return { type: "INVALID", body: { status: 400, body: createErrorResponse(todoWithoutIdPartial) } };
 	}
 
-	return { type: "VALID", data: todoWithoutIdPartial.data };
+	return { type: "VALID", data: todoWithoutIdPartial };
 };
 
 export const validateApiTodoWithoutId = (body: ApiRequestBody): ApiRequestValidation<TodoWithoutId> => {
-	const todoWithoutIdParsed = todoWithoutIdValidator.safeParse(body);
-	if (!todoWithoutIdParsed.success) {
-		return { type: "INVALID", body: { status: 400, body: createErrorResponse(todoWithoutIdParsed.error) } };
+	const todoWithoutIdParsed = apiBodyToTodoWithoutId(body);
+	if (todoWithoutIdParsed instanceof Error) {
+		return { type: "INVALID", body: { status: 400, body: createErrorResponse(todoWithoutIdParsed) } };
 	}
 
-	return { type: "VALID", data: todoWithoutIdParsed.data };
+	return { type: "VALID", data: todoWithoutIdParsed };
 };

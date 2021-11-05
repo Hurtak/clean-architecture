@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { Todo, todoValidator } from "../../4-entities/todos";
+import { Todo, validateTodoProperties } from "../../4-entities/todos";
 
 export const todoDatabaseValidator = z
 	.object({
@@ -12,5 +12,12 @@ export const todoDatabaseValidator = z
 
 export type TodoDatabase = z.infer<typeof todoDatabaseValidator>;
 
-export const todoDatabaseToTodo = (todoDatabase: TodoDatabase): Todo =>
-	todoValidator.parse({ id: todoDatabase.id, text: todoDatabase.text, completed: Boolean(todoDatabase.completed) });
+export const todoDatabaseToTodo = (todoDatabase: TodoDatabase): Todo => {
+	const todo = validateTodoProperties({
+		id: todoDatabase.id,
+		text: todoDatabase.text,
+		completed: Boolean(todoDatabase.completed),
+	});
+	if (todo instanceof Error) throw todo;
+	return todo;
+};
