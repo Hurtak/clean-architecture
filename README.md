@@ -14,11 +14,11 @@
 ## Implementation notes
 
 -   The folder structure mirrors the Clean architecture as closely as possible. The folders that directly relate to the Clean architecture concepts (and the diagram above) have number prefixes, so they are sorted from the most outer layer to the most inner layer.
-    -   `0-config`
-    -   `1-data-providers`
-    -   `2-entrypoints`
-    -   `3-use-cases`
-    -   `4-entities`
+    -   `/src/0-config`
+    -   `/src/1-data-providers`
+    -   `/src/2-entrypoints`
+    -   `/src/3-use-cases`
+    -   `/src/4-entities`
 
 ## Problems/Questions
 
