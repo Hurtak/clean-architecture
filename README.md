@@ -1,13 +1,13 @@
 # Clean architecture example
 
--   Example repository implementing the Clean architecture concepts
-
-    -   API spec is from https://www.todobackend.com/
+-   Example web server application implementing the Clean architecture concepts
+-   API spec is from https://www.todobackend.com/
+-   Technology
     -   Language: TypeScript
-    -   Web server: Express
     -   Database: SQLite (in memory)
+    -   Web server: Koa
 
-## My current understanding of clean architecture
+## My current understanding of the Clean architecture
 
 ![Clean architecture diagram](./diagram.png)
 
@@ -33,7 +33,7 @@
     -   500 response is a text
 -   add tests
 
-## Related articles links
+## Related links
 
 -   https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
 -   https://bazaglia.com/clean-architecture-with-typescript-ddd-onion/
