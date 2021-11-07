@@ -26,7 +26,7 @@ export const createTodoWithoutId = (text: string, completed: boolean): TodoWitho
 // Validation
 
 export const validateTodoProperties = <T extends Todo | Partial<Todo>>(todo: T): T | Error => {
-	if (todo.text) {
+	if (todo.text !== undefined) {
 		if (todo.text.length < 1) {
 			return new TodoTextTooShort("Todo text is too short, minimum text.length is 1 character");
 		}
