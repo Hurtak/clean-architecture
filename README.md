@@ -11,6 +11,15 @@
 
 ![Clean architecture diagram](./diagram.png)
 
+## Implementation notes
+
+-   The folder structure mirrors the Clean architecture as closely as possible. The folders that directly relate to the Clean architecture concepts (and the diagram above) have number prefixes, so they are sorted from the most outer layer to the most inner layer.
+    -   `0-config`
+    -   `1-data-providers`
+    -   `2-entrypoints`
+    -   `3-use-cases`
+    -   `4-entities`
+
 ## Problems/Questions
 
 -   Is `TodoWithoutId` really entity (core business type) or should it be higher, like in use-cases (it is need in use-cases but it does not feel like it belongs there)?
