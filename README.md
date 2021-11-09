@@ -40,6 +40,7 @@
     -   400 JSON parse error response is a text
     -   404 response is a text
     -   500 response is a text
+-   add linter rule preventing of import of modules from inner to outer layers
 -   add tests
 
 ## Related links
