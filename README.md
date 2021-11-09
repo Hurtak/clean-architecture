@@ -1,6 +1,6 @@
 # Clean architecture example
 
--   Example web server application implementing the Clean architecture concepts
+-   Example web server application implementing the [Clean architecture concepts](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 -   API spec is from https://www.todobackend.com/
 -   Technology
     -   Language: TypeScript
