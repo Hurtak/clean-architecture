@@ -6,6 +6,7 @@
     -   Language: TypeScript
     -   Database: SQLite (in memory)
     -   Web server: Koa
+-   Fell free to comment and suggest improvements either by creating issue or PR :).
 
 ## My current understanding of the Clean architecture
 
@@ -13,16 +14,16 @@
 
 ## Implementation notes
 
--   The project is trying to implement the [Clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) as cleanly as possible on small example app
+-   The project is trying to implement the [Clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) as cleanly as possible on small example app.
 -   The folder structure mirrors the Clean architecture as closely as possible. The folders that directly relate to the Clean architecture concepts (and the diagram above) have number prefixes, so they are sorted from the most outer layer to the most inner layer.
     -   `/src/0-config`
     -   `/src/1-data-providers`
     -   `/src/2-entrypoints`
     -   `/src/3-use-cases`
     -   `/src/4-entities`
--   Start the project with `npm run dev` (see all the scripts in [package.json](package.json)).
+-   Start the project with `npm run dev` (see all the scripts you can run in [package.json](package.json)).
 
-## Problems/Questions
+## Implementation Problems/Questions
 
 -   Is `TodoWithoutId` really entity (core business type) or should it be higher, like in use-cases (it is need in use-cases but it does not feel like it belongs there)?
 -   There is import of types from outer layers to inner ones.
