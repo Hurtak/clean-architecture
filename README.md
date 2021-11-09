@@ -1,6 +1,6 @@
 # Clean architecture example
 
--   Example web server application implementing the [Clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) concepts
+-   Example web server application implementing the [Clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) concept as an example web server.
 -   API spec is from https://www.todobackend.com/
 -   Technology
     -   Language: TypeScript
@@ -13,12 +13,14 @@
 
 ## Implementation notes
 
+-   The project is trying to implement the [Clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) as cleanly as possible on small example app
 -   The folder structure mirrors the Clean architecture as closely as possible. The folders that directly relate to the Clean architecture concepts (and the diagram above) have number prefixes, so they are sorted from the most outer layer to the most inner layer.
     -   `/src/0-config`
     -   `/src/1-data-providers`
     -   `/src/2-entrypoints`
     -   `/src/3-use-cases`
     -   `/src/4-entities`
+-   Start the project with `npm run dev` (see all the scripts in [package.json](package.json)).
 
 ## Problems/Questions
 
