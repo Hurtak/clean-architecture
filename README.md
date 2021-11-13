@@ -22,6 +22,7 @@
     -   `/src/3-use-cases`
     -   `/src/4-entities`
 -   Start the project with `npm run dev` (see all the scripts you can run in [package.json](package.json)).
+-   After the project is started, there is example data put in the database (see [storage-migrations.ts](src/1-data-providers/storage/storage-migrations.ts)).
 
 ## Implementation Problems/Questions
 
