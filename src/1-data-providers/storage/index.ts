@@ -1,5 +1,5 @@
+import { Logger } from "../../2-entrypoints/logger";
 import { ValueFromPromise } from "../../utils/typescript";
-import { Logger } from "../logger";
 import { storageClient } from "./storage-client";
 import { storageMigrations } from "./storage-migrations";
 import { storageTodos } from "./storage-todos";

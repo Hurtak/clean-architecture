@@ -1,7 +1,7 @@
 import { config } from "./0-config";
-import { logger } from "./1-data-providers/logger";
 import { storage } from "./1-data-providers/storage";
 import { api } from "./2-entrypoints/api";
+import { logger } from "./2-entrypoints/logger";
 import { todos } from "./3-use-cases/todos";
 
 const main = async (): Promise<void> => {
@@ -13,7 +13,14 @@ const main = async (): Promise<void> => {
 
 	const storageInstance = await storage({ logger: logger({ prefix: "db" }) });
 	const todosInstance = todos({
-		storage: storageInstance,
+		todos: {
+			getAll: storageInstance.todos.getAll,
+			getById: storageInstance.todos.getById,
+			create: storageInstance.todos.create,
+			patchById: storageInstance.todos.patchById,
+			deleteAll: storageInstance.todos.deleteAll,
+			deleteById: storageInstance.todos.deleteById,
+		},
 	});
 
 	api({

@@ -1,25 +1,35 @@
-import { Storage } from "../1-data-providers/storage";
 import { Todo, TodoWithoutId } from "../4-entities/todos";
 
-export const todos = ({ storage }: { storage: Storage }) => {
+export const todos = ({
+	todos,
+}: {
+	todos: {
+		getAll: () => Promise<Todo[]>;
+		getById: (id: Todo["id"]) => Promise<Todo | null>;
+		create: (todoWithoutId: TodoWithoutId) => Promise<Todo>;
+		patchById: (id: Todo["id"], partialTodo: Partial<TodoWithoutId>) => Promise<Todo | null>;
+		deleteAll: () => Promise<void>;
+		deleteById: (id: Todo["id"]) => Promise<Todo | null>;
+	};
+}) => {
 	return {
 		getAll: (): Promise<Todo[]> => {
-			return storage.todos.getAll();
+			return todos.getAll();
 		},
 		getById: (id: Todo["id"]): Promise<Todo | null> => {
-			return storage.todos.getById(id);
+			return todos.getById(id);
 		},
 		create: (todoWithoutId: TodoWithoutId): Promise<Todo> => {
-			return storage.todos.create(todoWithoutId);
+			return todos.create(todoWithoutId);
 		},
 		patchById: (id: Todo["id"], partialTodoWithoutId: Partial<TodoWithoutId>): Promise<Todo | null> => {
-			return storage.todos.patchById(id, partialTodoWithoutId);
+			return todos.patchById(id, partialTodoWithoutId);
 		},
 		deleteAll: (): Promise<void> => {
-			return storage.todos.deleteAll();
+			return todos.deleteAll();
 		},
 		deleteById: (id: Todo["id"]): Promise<Todo | null> => {
-			return storage.todos.deleteById(id);
+			return todos.deleteById(id);
 		},
 	};
 };

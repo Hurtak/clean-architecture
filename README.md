@@ -33,11 +33,9 @@
 -   What about logger? Currently it is in `1-data-providers` so it can be used by other `1-data-providers` but it is not really providing data or communicate with external service, it seems to fit more into `2-entry-point` since it is kind of empty entry point with output (console) type of thing, but we cannot move it there (to `2-entry-point`) since logger needs to be dependency injected into other `1-data-providers`. Maybe renaming `1-data-providers` could also solve this.
 -   Maybe rename `4-entities` to `4-domain` to be more clear?
 -   Feedback from Reddit thread https://www.reddit.com/r/typescript/comments/qq8psv/ratecriticize_my_typescript_clean_architecture/
-
-## Remaining work
-
 -   Maybe Zod validation errors should not get returned directly by API in `additionalData` but transformed to out own data type in api-ports?
 -   Maybe add more than one thing in the use-case, something like dummy email service? So we have more than one of each in the use case?
+-   `3-use-cases/todos.ts` pretty much re-implements storage types, maybe we could share it somehow?
 
 ## Nice to have
 
@@ -45,7 +43,6 @@
     -   400 JSON parse error response is a text
     -   404 response is a text
     -   500 response is a text
--   add linter rule preventing of import of modules from inner to outer layers
 -   add tests
 
 ## Related links
