@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-const formatMessage = (prefix: string, message: string) => `${prefix}:\t ${message}`;
+const formatMessage = (prefix: string, message: string) => `${prefix}:\t${message}`;
 
 export const logger = ({ prefix }: { prefix: string }) => {
 	return {
