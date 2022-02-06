@@ -1,4 +1,4 @@
-import { getId, idDoesNotExist } from "./jest";
+import { getId, idDoesNotExist } from "./test-helpers";
 
 describe("test helpers", () => {
 	describe("getId", () => {

@@ -1,43 +1,8 @@
-import { Todos } from "../../3-use-cases/todos";
 import { Todo, TodoWithoutId } from "../../4-entities/todos";
-import { getId, idDoesNotExist } from "../../utils/jest";
-import { never } from "../../utils/typescript";
+import { getTodosUseCaseMock } from "../../utils/test/mock-todos-use-case";
+import { getId, idDoesNotExist, never } from "../../utils/test/test-helpers";
 import { apiTodos } from "./api-todos";
-import { ApiTodo } from "./api-todos-ports";
 import { ApiRequestParams, ApiResponse } from "./api-utis";
-
-const getTodosMock = (initialState: ApiTodo[]): Todos => {
-	let todos: ApiTodo[] = initialState ?? [];
-
-	const getById = (id: number) => Promise.resolve(todos.find((t) => t.id === id) ?? null);
-
-	return {
-		getAll: () => Promise.resolve(todos),
-		getById,
-		create: (todoWithoutId) => {
-			const t = { id: getId(), ...todoWithoutId };
-			todos.push(t);
-			return Promise.resolve(t);
-		},
-		patchById: async (id, partialTodoWithoutId) => {
-			const t = await getById(id);
-			if (!t) return null;
-			todos = todos.map((t) => (t.id === id ? { ...t, ...partialTodoWithoutId } : t));
-			const tPatched = await getById(id);
-			return tPatched ?? null;
-		},
-		deleteAll: () => {
-			todos = [];
-			return Promise.resolve();
-		},
-		deleteById: async (id) => {
-			const t = await getById(id);
-			if (!t) null;
-			todos = todos.filter((t) => t.id !== id);
-			return t;
-		},
-	};
-};
 
 const testParamIdExists = <T>(func: (params: ApiRequestParams) => Promise<ApiResponse<T>>) => {
 	test("error when id does not exist", async () => {
@@ -84,9 +49,9 @@ describe("apiTodos", () => {
 	const t2 = { id: getId(), text: "t2", completed: true };
 	const todos = [t1, t2];
 
-	let instance = apiTodos({ todos: getTodosMock(todos) });
+	let instance = apiTodos({ todos: getTodosUseCaseMock(todos) });
 	beforeEach(() => {
-		instance = apiTodos({ todos: getTodosMock(todos) });
+		instance = apiTodos({ todos: getTodosUseCaseMock(todos) });
 	});
 
 	test("getAll", async () => {
