@@ -1,6 +1,7 @@
 import { Todo, TodoWithoutId } from "../../4-entities/todos";
 import { getTodosUseCaseMock } from "../../utils/test/mock-todos-use-case";
-import { getId, idDoesNotExist, never } from "../../utils/test/test-helpers";
+import { getId, idDoesNotExist } from "../../utils/test/test-helpers";
+import { never } from "../../utils/typescript";
 import { apiTodos } from "./api-todos";
 import { ApiRequestParams, ApiResponse } from "./api-utis";
 
