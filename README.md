@@ -24,7 +24,7 @@
 -   Start the project with `npm run dev` (see all the scripts you can run in [package.json](package.json)).
 -   After the project is started, there is example data put in the database (see [storage-migrations.ts](src/1-data-providers/storage/storage-migrations.ts)).
 
-## Implementation Problems/Questions
+## TODOs
 
 -   Is `TodoWithoutId` really entity (core business type) or should it be higher, like in use-cases (it is need in use-cases but it does not feel like it belongs there)?
 -   Since `1-data-providers` can be also communication with 3rd party services that do not provide data, eg send email service, maybe this should be named differently?
@@ -34,14 +34,10 @@
 -   Maybe add more than one thing in the use-case? So we have more than one of each in the use case?
     -   something like dummy email service?
 -   `3-use-cases/todos.ts` pretty much re-implements storage types, maybe we could share it somehow?
-
-## Nice to have
-
 -   make sure every response is JSON based
     -   400 JSON parse error response is a text
     -   404 response is a text
     -   500 response is a text
--   add tests
 
 ## Related links
 
