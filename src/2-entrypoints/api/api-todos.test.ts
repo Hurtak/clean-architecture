@@ -39,15 +39,15 @@ const getTodosMock = (initialState: ApiTodo[]): Todos => {
 	};
 };
 
-const testIdExists = <T>(func: (p: ApiRequestParams) => Promise<ApiResponse<T>>) => {
+const testParamIdExists = <T>(func: (params: ApiRequestParams) => Promise<ApiResponse<T>>) => {
 	test("error when id does not exist", async () => {
 		const res = await func({ id: String(idDoesNotExist) });
 		expect(res.status).toEqual(404);
 	});
 };
 
-const testIdParamValid = <T>(func: (p: ApiRequestParams) => Promise<ApiResponse<T>>) => {
-	describe("id errors", () => {
+const testParamIdValid = <T>(func: (params: ApiRequestParams) => Promise<ApiResponse<T>>) => {
+	describe("parameter id validation", () => {
 		test("error when id is missing", async () => {
 			const res = await func({});
 			expect(res.status).toEqual(400);
@@ -55,6 +55,26 @@ const testIdParamValid = <T>(func: (p: ApiRequestParams) => Promise<ApiResponse<
 		test("error when id is not a number", async () => {
 			const res = await func({ id: "NaN" });
 			expect(res.status).toEqual(400);
+		});
+	});
+};
+
+const testBodyTodoWithoutIdValid = <T>(func: (body: unknown) => Promise<ApiResponse<T>>) => {
+	describe("body todo without id validation", () => {
+		test("incorrect shape", async () => {
+			const t = { foo: 1 };
+			const create = await func(t);
+			expect(create.status).toEqual(400);
+		});
+		test("incorrect type", async () => {
+			const t: TodoWithoutId = { text: "t", completed: true };
+			const create = await func({ ...t, completed: "foo" });
+			expect(create.status).toEqual(400);
+		});
+		test("extra property", async () => {
+			const t: TodoWithoutId = { text: "t", completed: true };
+			const create = await func({ ...t, extra: 1 });
+			expect(create.status).toEqual(400);
 		});
 	});
 };
@@ -77,18 +97,21 @@ describe("apiTodos", () => {
 	});
 
 	describe("getById", () => {
+		testParamIdValid(instance.getById);
+		testParamIdExists(instance.getById);
+
 		test("return todo when id exists", async () => {
 			const getById = await instance.getById({ id: String(t1.id) });
 			expect(getById.status).toEqual(200);
 			if (getById.status !== 200) return never();
 			expect(getById.body).toEqual(t1);
 		});
-
-		testIdExists(instance.getById);
-		testIdParamValid(instance.getById);
 	});
 
 	describe("create", () => {
+		testParamIdValid(instance.create);
+		testBodyTodoWithoutIdValid(instance.create);
+
 		test("todo creation", async () => {
 			const t: TodoWithoutId = { text: "t", completed: true };
 			const create = await instance.create(t);
@@ -96,22 +119,13 @@ describe("apiTodos", () => {
 			if (create.status !== 200) return never();
 			expect(create.body).toEqual({ id: create.body.id, ...t });
 		});
-
-		testIdParamValid(instance.create);
-
-		test("incorrect shape", async () => {
-			const t = { foo: 1 };
-			const create = await instance.create(t);
-			expect(create.status).toEqual(400);
-		});
-		test("incorrect shape", async () => {
-			const t: TodoWithoutId = { text: "t", completed: true };
-			const create = await instance.create({ ...t, extra: 1 });
-			expect(create.status).toEqual(400);
-		});
 	});
 
 	describe("patchById", () => {
+		testParamIdValid((p) => instance.patchById(p, {}));
+		testParamIdExists((p) => instance.patchById(p, {}));
+		testBodyTodoWithoutIdValid((b) => instance.patchById({ id: String(t1.id) }, b));
+
 		test("patch", async () => {
 			const patch: Partial<Todo> = { text: "patched" };
 			const patchById = await instance.patchById({ id: String(t1.id) }, patch);
@@ -119,9 +133,39 @@ describe("apiTodos", () => {
 			if (patchById.status !== 200) return never();
 			expect(patchById.body).toEqual({ ...t1, ...patch });
 		});
+	});
 
-		testIdExists((p) => instance.patchById(p, {}));
-		testIdParamValid((p) => instance.patchById(p, {}));
+	describe("deleteById", () => {
+		testParamIdValid(instance.deleteById);
+		testParamIdExists(instance.deleteById);
+
+		test("deletes todo when id exists", async () => {
+			const getById1 = await instance.getById({ id: String(t1.id) });
+			expect(getById1.status).toEqual(200);
+			if (getById1.status !== 200) return never();
+
+			const deleteById = await instance.deleteById({ id: String(t1.id) });
+			expect(deleteById.status).toEqual(200);
+			if (deleteById.status !== 200) return never();
+
+			const getById2 = await instance.getById({ id: String(t1.id) });
+			expect(getById2.status).toEqual(404);
+		});
+
+		test("deletes only todo with given id", async () => {
+			const tDeleted = t2;
+
+			const getAll1 = await instance.getAll();
+			if (getAll1.status !== 200) return never();
+			expect(getAll1.body).toEqual(todos);
+
+			const deleteById = await instance.deleteById({ id: String(tDeleted.id) });
+			if (deleteById.status !== 200) return never();
+
+			const getAll2 = await instance.getAll();
+			if (getAll2.status !== 200) return never();
+			expect(getAll2.body).toEqual(todos.filter((t) => t.id !== tDeleted.id));
+		});
 	});
 
 	test("deleteAll", async () => {
