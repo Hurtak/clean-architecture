@@ -45,13 +45,13 @@ const testBodyTodoWithoutIdValid = <T>(func: (body: unknown) => Promise<ApiRespo
 };
 
 describe("apiTodos", () => {
-	const t1 = { id: getId(), text: "t1", completed: false };
-	const t2 = { id: getId(), text: "t2", completed: true };
-	const todos = [t1, t2];
+	const t1: Todo = { id: getId(), text: "t1", completed: false };
+	const t2: Todo = { id: getId(), text: "t2", completed: true };
+	const initialState: Todo[] = [t1, t2];
 
-	let instance = apiTodos({ todos: getTodosUseCaseMock(todos) });
+	let instance = apiTodos({ todos: getTodosUseCaseMock(initialState) });
 	beforeEach(() => {
-		instance = apiTodos({ todos: getTodosUseCaseMock(todos) });
+		instance = apiTodos({ todos: getTodosUseCaseMock(initialState) });
 	});
 
 	test("getAll", async () => {
@@ -122,27 +122,27 @@ describe("apiTodos", () => {
 
 			const getAll1 = await instance.getAll();
 			if (getAll1.status !== 200) return never();
-			expect(getAll1.body).toEqual(todos);
+			expect(getAll1.body).toEqual(initialState);
 
 			const deleteById = await instance.deleteById({ id: String(tDeleted.id) });
 			if (deleteById.status !== 200) return never();
 
 			const getAll2 = await instance.getAll();
 			if (getAll2.status !== 200) return never();
-			expect(getAll2.body).toEqual(todos.filter((t) => t.id !== tDeleted.id));
+			expect(getAll2.body).toEqual(initialState.filter((t) => t.id !== tDeleted.id));
 		});
 	});
 
 	test("deleteAll", async () => {
 		const getAll1 = await instance.getAll();
 		if (getAll1.status !== 200) return never();
-		expect(getAll1.body.length).toEqual(todos.length);
+		expect(getAll1.body).toHaveLength(initialState.length);
 
 		const deleteAll = await instance.deleteAll();
 		expect(deleteAll.status).toEqual(204);
 
 		const getAll2 = await instance.getAll();
 		if (getAll2.status !== 200) return never();
-		expect(getAll2.body.length).toEqual(0);
+		expect(getAll2.body).toHaveLength(0);
 	});
 });

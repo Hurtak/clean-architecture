@@ -3,7 +3,7 @@ import { Todos } from "../../3-use-cases/todos";
 import { getId } from "./test-helpers";
 
 export const getTodosUseCaseMock = (initialState: ApiTodo[]): Todos => {
-	let todos: ApiTodo[] = initialState ?? [];
+	let todos: ApiTodo[] = [...initialState];
 
 	const getById = (id: number) => Promise.resolve(todos.find((t) => t.id === id) ?? null);
 
