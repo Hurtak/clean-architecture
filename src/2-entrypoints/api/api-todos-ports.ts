@@ -33,10 +33,7 @@ const apiBodyToTodoWithoutId = (body: ApiRequestBody): TodoWithoutId | Error => 
 const apiBodyToPartialTodoWithoutId = (body: ApiRequestBody): Partial<TodoWithoutId> | Error => {
 	const parsed = validatorApiTodoWithoutId.partial().safeParse(body);
 	if (parsed.success) {
-		return validateTodoProperties({
-			text: parsed.data.text,
-			completed: parsed.data.completed,
-		});
+		return validateTodoProperties(parsed.data);
 	} else {
 		return parsed.error;
 	}
