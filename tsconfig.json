@@ -8,5 +8,6 @@
 		"outDir": "build",
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true
-	}
+	},
+	"include": ["src/**/*"]
 }
