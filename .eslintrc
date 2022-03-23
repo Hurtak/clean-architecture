@@ -16,10 +16,6 @@
 		"no-console": "error",
 		"simple-import-sort/imports": "error",
 		"simple-import-sort/exports": "error",
-		"no-restricted-syntax": [
-			"error",
-			{ "selector": "ExportDefaultDeclaration", "message": "Prefer named exports" }
-		],
 		"@typescript-eslint/consistent-type-definitions": ["error", "type"]
 	}
 }

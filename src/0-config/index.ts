@@ -3,7 +3,7 @@ import { z } from "zod";
 
 const configValidator = z
 	.object({
-		port: z.number(),
+		port: z.preprocess(Number, z.number().int()),
 	})
 	.strict();
 
