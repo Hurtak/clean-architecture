@@ -10,6 +10,7 @@ const main = async (): Promise<void> => {
 	loggerInstance.log(`NODE_ENV=${String(process.env.NODE_ENV)}`);
 
 	const configInstance = config();
+	loggerInstance.log(`config=${JSON.stringify(configInstance)}`);
 
 	const storageInstance = await storage({ logger: logger({ prefix: "db" }) });
 	const todosInstance = todos({
