@@ -21,7 +21,7 @@ export const createErrorResponse = (error: unknown): ErrorResponse => {
 	if (error instanceof ZodError) {
 		return {
 			error: {
-				name: "ValidationError",
+				name: "ErrorValidation",
 				message: "Invalid shape the request data",
 				additionalData: error.issues,
 			},
@@ -37,7 +37,7 @@ export const createErrorResponse = (error: unknown): ErrorResponse => {
 
 	return {
 		error: {
-			name: "UnknownError",
+			name: "ErrorUnknown",
 			message: "Unknown error",
 			additionalData: error,
 		},

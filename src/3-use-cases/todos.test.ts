@@ -1,4 +1,4 @@
-import { Todo, TodoWithoutId } from "../4-entities/todos";
+import { Todo, TodoWithoutId } from "../4-domain/todos";
 import { getTodosUseCaseMock } from "../utils/test/mock-todos-use-case";
 import { getId, idDoesNotExist } from "../utils/test/test-helpers";
 import { todos } from "./todos";

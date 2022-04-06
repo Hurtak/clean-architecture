@@ -1,7 +1,7 @@
 import { config } from "./0-config";
 import { storage } from "./1-data-providers/storage";
-import { api } from "./2-entrypoints/api";
-import { logger } from "./2-entrypoints/logger";
+import { api } from "./2-entry-points/api";
+import { logger } from "./2-entry-points/logger";
 import { todos } from "./3-use-cases/todos";
 
 const main = async (): Promise<void> => {

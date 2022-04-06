@@ -1,4 +1,4 @@
-import { ApiTodo } from "../../2-entrypoints/api/api-todos-ports";
+import { ApiTodo } from "../../2-entry-points/api/api-todos-ports";
 import { Todos } from "../../3-use-cases/todos";
 import { getId } from "./test-helpers";
 

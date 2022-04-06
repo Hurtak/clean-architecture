@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { Logger } from "../../2-entrypoints/logger";
-import { Todo, TodoWithoutId } from "../../4-entities/todos";
+import { Logger } from "../../2-entry-points/logger";
+import { Todo, TodoWithoutId } from "../../4-domain/todos";
 import { StorageClient } from "./storage-client";
 import { todoDatabaseToTodo, todoDatabaseValidator } from "./storage-todos-ports";
 

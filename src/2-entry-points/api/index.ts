@@ -23,9 +23,7 @@ export const api = ({ port, todos, logger }: { port: number; todos: Todos; logge
 	});
 
 	// Routes
-	router.get("/heartbeat", (ctx) => {
-		ctx.body = "OK";
-	});
+	router.get("/heartbeat", (ctx) => apiResponseApply(ctx, { status: 204 }));
 
 	router.get("/todos", (ctx) => apiTodosInstance.getAll().then((res) => apiResponseApply(ctx, res)));
 	router.post("/todos", (ctx) => apiTodosInstance.create(ctx.request.body).then((res) => apiResponseApply(ctx, res)));

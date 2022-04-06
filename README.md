@@ -39,16 +39,11 @@
 
 -   Is `TodoWithoutId` really entity (core business type) or should it be higher, like in use-cases (it is need in use-cases but it does not feel like it belongs there)?
 -   Since `1-data-providers` can be also communication with 3rd party services that do not provide data, eg send email service, maybe this should be named differently?
--   Maybe rename `4-entities` to `4-domain` to be more clear?
 -   Feedback from Reddit thread https://www.reddit.com/r/typescript/comments/qq8psv/ratecriticize_my_typescript_clean_architecture/
 -   Maybe Zod validation errors should not get returned directly by API in `additionalData` but transformed to out own data type in api-ports?
 -   Maybe add more than one thing in the use-case? So we have more than one of each in the use case?
     -   something like dummy email service?
 -   `3-use-cases/todos.ts` pretty much re-implements storage types, maybe we could share it somehow?
--   make sure every response is JSON based
-    -   400 JSON parse error response is a text
-    -   404 response is a text
-    -   500 response is a text
 
 ## Related links
 

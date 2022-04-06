@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { Todo, validateTodoProperties } from "../../4-entities/todos";
+import { Todo, validateTodoProperties } from "../../4-domain/todos";
 
 export const todoDatabaseValidator = z
 	.object({

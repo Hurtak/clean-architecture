@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2022-04-06T15:39:44.223Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36" etag="uJ5lpJucDs6Khui92ja7" version="17.4.0" type="google">
+  <diagram id="nJHBNyDoy3k4vahkzcMj" name="Page-1">
+    <mxGraphModel dx="1117" dy="532" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-19" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFCC99;" parent="1" vertex="1">
+          <mxGeometry x="240" y="120" width="400" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-11" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#99CCFF;" parent="1" vertex="1">
+          <mxGeometry x="280" y="160" width="320" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-5" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#99FF99;" parent="1" vertex="1">
+          <mxGeometry x="320" y="200" width="240" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-3" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FF9999;" parent="1" vertex="1">
+          <mxGeometry x="360" y="240" width="160" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-1" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFFF99;" parent="1" vertex="1">
+          <mxGeometry x="400" y="280" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-2" value="Domain" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="410" y="305" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-4" value="Use cases" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="410" y="249" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-7" value="API" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="410" y="205" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-8" value="Jobs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=45;" parent="1" vertex="1">
+          <mxGeometry x="482" y="240" width="60" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-10" value="UI Controllers&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=-45;" parent="1" vertex="1">
+          <mxGeometry x="325" y="239" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-12" value="Database" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="410" y="165" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-13" value="Message queues" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=-45;" parent="1" vertex="1">
+          <mxGeometry x="290" y="209" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-14" value="Email service" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=45;" parent="1" vertex="1">
+          <mxGeometry x="490" y="210" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-15" value="Logging" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=45;" parent="1" vertex="1">
+          <mxGeometry x="290" y="400" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-17" value="Caching service" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=-45;" parent="1" vertex="1">
+          <mxGeometry x="490" y="400" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-20" value="Config" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="410" y="125" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-21" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="260" y="320" as="sourcePoint" />
+            <mxPoint x="413" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-22" value="&lt;h6&gt;Order of dependencies&lt;/h6&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=0" parent="1" vertex="1">
+          <mxGeometry x="283" y="311" width="97" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-24" value="" style="rounded=1;whiteSpace=wrap;html=1;fontColor=#FFFFFF;strokeColor=#000000;fillColor=#FFCC99;" parent="1" vertex="1">
+          <mxGeometry x="680" y="120" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-25" value="&lt;font color=&quot;#000000&quot;&gt;&lt;b&gt;Config&lt;/b&gt;: wires everything together. Initializes the &lt;u&gt;data providers&lt;/u&gt; and &lt;u&gt;entrypoints&lt;/u&gt;, dependency injects &lt;u&gt;config&lt;/u&gt;.&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=1;fontColor=#FFFFFF;" parent="1" vertex="1">
+          <mxGeometry x="730" y="120" width="350" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-26" value="" style="rounded=1;whiteSpace=wrap;html=1;fontColor=#FFFFFF;strokeColor=#000000;fillColor=#99CCFF;" parent="1" vertex="1">
+          <mxGeometry x="680" y="169" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-27" value="&lt;font color=&quot;#000000&quot;&gt;&lt;b&gt;Data providers&lt;/b&gt;: retrieve/store data and communicate with 3rd party services. Gets injected &lt;u&gt;config&lt;/u&gt;. Place where we transform external services data structures to our own &lt;u&gt;domain&lt;/u&gt; logic.&lt;br&gt;Eg: MySQL database communication, Email service.&lt;br&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=1;fontColor=#FFFFFF;" parent="1" vertex="1">
+          <mxGeometry x="730" y="170" width="350" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-28" value="" style="rounded=1;whiteSpace=wrap;html=1;fontColor=#FFFFFF;strokeColor=#000000;fillColor=#99FF99;" parent="1" vertex="1">
+          <mxGeometry x="680" y="240" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-29" value="&lt;strong style=&quot;color: rgb(14 , 16 , 26) ; background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;Entry points&lt;/strong&gt;&lt;span style=&quot;color: rgb(14 , 16 , 26) ; background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;: access and output of the application. Initializes&amp;nbsp;&lt;/span&gt;&lt;u style=&quot;color: rgb(14 , 16 , 26) ; background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;&lt;span style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;use cases&lt;/span&gt;&lt;/u&gt;&lt;span style=&quot;color: rgb(14 , 16 , 26) ; background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;. Gets injected&amp;nbsp;&lt;/span&gt;&lt;u style=&quot;color: rgb(14 , 16 , 26) ; background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;&lt;span style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;config&lt;/span&gt;&lt;/u&gt;&lt;span style=&quot;color: rgb(14 , 16 , 26) ; background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;&amp;nbsp;and&amp;nbsp;&lt;/span&gt;&lt;u style=&quot;color: rgb(14 , 16 , 26) ; background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;&lt;span style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;data providers&lt;/span&gt;&lt;/u&gt;&lt;span style=&quot;color: rgb(14 , 16 , 26) ; background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;.&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=1;fontColor=#FFFFFF;" parent="1" vertex="1">
+          <mxGeometry x="730" y="240" width="350" height="29" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-30" value="" style="rounded=1;whiteSpace=wrap;html=1;fontColor=#FFFFFF;strokeColor=#000000;fillColor=#FF9999;" parent="1" vertex="1">
+          <mxGeometry x="680" y="290" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-31" value="&lt;p style=&quot;color: rgb(14 , 16 , 26) ; background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;&lt;strong style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;Use cases&lt;/strong&gt;&lt;span style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;: application business logic. Scenarios driven by&amp;nbsp;&lt;/span&gt;&lt;u style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;&lt;span style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;entry points&lt;/span&gt;&lt;/u&gt;&lt;span style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;&amp;nbsp;requests.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;color: rgb(14 , 16 , 26) ; background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;&lt;span style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;Eg:&amp;nbsp;&lt;/span&gt;&lt;em style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;Register user&lt;/em&gt;&lt;span style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;&amp;nbsp;scenario - describes the actions that should be taken when this scenario happens. It&#39;s the orchestrator that says:&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;color: rgb(14 , 16 , 26) ; background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;&lt;span style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;- Go to the database to fetch the data&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;color: rgb(14 , 16 , 26) ; background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;&lt;span style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;- Perform domain logic like validation if the user exists or if the password has a required minimum length&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;color: rgb(14 , 16 , 26) ; background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;&lt;span style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;- Send an email to the user&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;color: rgb(14 , 16 , 26) ; background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;&lt;span style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;- Return response driving the UI redraw&lt;/span&gt;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=1;fontColor=#FFFFFF;" parent="1" vertex="1">
+          <mxGeometry x="730" y="290" width="350" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-32" value="" style="rounded=1;whiteSpace=wrap;html=1;fontColor=#FFFFFF;strokeColor=#000000;fillColor=#FFFF99;" parent="1" vertex="1">
+          <mxGeometry x="680" y="430" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="wBS1nP-2k5OH8Zin6J1u-33" value="&lt;p style=&quot;color: rgb(14 , 16 , 26) ; background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;&lt;strong style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;Domain&lt;/strong&gt;&lt;span style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;: domain/business logic and types.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;color: rgb(14 , 16 , 26) ; background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;&lt;span style=&quot;background: transparent ; margin-top: 0pt ; margin-bottom: 0pt&quot;&gt;Eg: User type and all operations supported by it, like validation of minimum username length.&lt;/span&gt;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=1;fontColor=#FFFFFF;" parent="1" vertex="1">
+          <mxGeometry x="730" y="430" width="350" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

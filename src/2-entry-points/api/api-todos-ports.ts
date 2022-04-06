@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { createTodoWithoutId, Todo, TodoWithoutId, validateTodoProperties } from "../../4-entities/todos";
+import { createTodoWithoutId, Todo, TodoWithoutId, validateTodoProperties } from "../../4-domain/todos";
 import { ApiRequestBody, ApiRequestParams, ApiRequestValidation, createErrorResponse } from "./api-utis";
 
 export type ApiTodo = {
