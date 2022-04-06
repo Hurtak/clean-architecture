@@ -12,7 +12,7 @@ export const api = ({ port, todos, logger }: { port: number; todos: Todos; logge
 	const router = new KoaRouter();
 	const apiTodosInstance = apiTodos({ todos });
 
-	// Middlewares before routes
+	// Middleware's before routes
 	server.use(koaBodyParser({ enableTypes: ["json"] }));
 
 	const formatLogOutput = (body: unknown): string => JSON.stringify(body)?.slice(0, 100) ?? "";
@@ -27,17 +27,19 @@ export const api = ({ port, todos, logger }: { port: number; todos: Todos; logge
 		ctx.body = "OK";
 	});
 
-	router.get("/", (ctx) => apiTodosInstance.getAll().then((res) => apiResponseApply(ctx, res)));
-	router.post("/", (ctx) => apiTodosInstance.create(ctx.request.body).then((res) => apiResponseApply(ctx, res)));
-	router.delete("/", (ctx) => apiTodosInstance.deleteAll().then((res) => apiResponseApply(ctx, res)));
+	router.get("/todos", (ctx) => apiTodosInstance.getAll().then((res) => apiResponseApply(ctx, res)));
+	router.post("/todos", (ctx) => apiTodosInstance.create(ctx.request.body).then((res) => apiResponseApply(ctx, res)));
+	router.delete("/todos", (ctx) => apiTodosInstance.deleteAll().then((res) => apiResponseApply(ctx, res)));
 
-	router.get("/:id", (ctx) => apiTodosInstance.getById(ctx.params).then((res) => apiResponseApply(ctx, res)));
-	router.patch("/:id", (ctx) =>
+	router.get("/todos/:id", (ctx) => apiTodosInstance.getById(ctx.params).then((res) => apiResponseApply(ctx, res)));
+	router.patch("/todos/:id", (ctx) =>
 		apiTodosInstance.patchById(ctx.params, ctx.request.body).then((res) => apiResponseApply(ctx, res))
 	);
-	router.delete("/:id", (ctx) => apiTodosInstance.deleteById(ctx.params).then((res) => apiResponseApply(ctx, res)));
+	router.delete("/todos/:id", (ctx) =>
+		apiTodosInstance.deleteById(ctx.params).then((res) => apiResponseApply(ctx, res))
+	);
 
-	// Middlewares after routes
+	// Middleware's after routes
 	server.use(router.routes());
 	server.use(router.allowedMethods());
 

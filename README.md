@@ -1,7 +1,7 @@
 # Clean architecture example
 
 -   Example web server application implementing the [Clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) concept as an example web server.
--   API spec is from https://www.todobackend.com/
+-   API spec is based on https://www.todobackend.com/
 -   Technology
     -   Language: TypeScript
     -   Database: SQLite (in memory)
@@ -23,6 +23,17 @@
     -   `/src/4-entities`
 -   Start the project with `npm run dev` (see all the scripts you can run in [package.json](package.json)).
 -   After the project is started, there is example data put in the database (see [storage-migrations.ts](src/1-data-providers/storage/storage-migrations.ts)).
+
+## API
+
+-   Routes
+    -   `/heartbeat` GET
+    -   `/todos` GET, POST, DELETE
+    -   `/todos/:id` GET, PATCH, DELETE
+-   API Spec
+    -   https://www.todobackend.com/
+-   Postman
+    -   [clean-code.postman_collection.json](./clean-code.postman_collection.json)
 
 ## TODOs
 
