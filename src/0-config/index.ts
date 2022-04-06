@@ -10,6 +10,6 @@ const configValidator = z
 export type Config = z.infer<typeof configValidator>;
 
 export const config = (): Config => {
-	const parsedConfig = configValidator.parse(configLoader);
+	const parsedConfig = configValidator.parse(configLoader.util.toObject());
 	return parsedConfig;
 };
