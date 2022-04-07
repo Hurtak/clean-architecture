@@ -13,13 +13,9 @@
 				"url": {
 					"raw": "http://localhost:3000/",
 					"protocol": "http",
-					"host": [
-						"localhost"
-					],
+					"host": ["localhost"],
 					"port": "3000",
-					"path": [
-						""
-					]
+					"path": [""]
 				}
 			},
 			"response": []
@@ -41,13 +37,9 @@
 				"url": {
 					"raw": "http://localhost:3000/",
 					"protocol": "http",
-					"host": [
-						"localhost"
-					],
+					"host": ["localhost"],
 					"port": "3000",
-					"path": [
-						""
-					]
+					"path": [""]
 				}
 			},
 			"response": []
@@ -69,13 +61,9 @@
 				"url": {
 					"raw": "http://localhost:3000/",
 					"protocol": "http",
-					"host": [
-						"localhost"
-					],
+					"host": ["localhost"],
 					"port": "3000",
-					"path": [
-						""
-					]
+					"path": [""]
 				}
 			},
 			"response": []
@@ -88,13 +76,9 @@
 				"url": {
 					"raw": "http://localhost:3000/",
 					"protocol": "http",
-					"host": [
-						"localhost"
-					],
+					"host": ["localhost"],
 					"port": "3000",
-					"path": [
-						""
-					]
+					"path": [""]
 				}
 			},
 			"response": []
@@ -107,13 +91,9 @@
 				"url": {
 					"raw": "http://localhost:3000/12",
 					"protocol": "http",
-					"host": [
-						"localhost"
-					],
+					"host": ["localhost"],
 					"port": "3000",
-					"path": [
-						"12"
-					]
+					"path": ["12"]
 				}
 			},
 			"response": []
@@ -126,13 +106,9 @@
 				"url": {
 					"raw": "http://localhost:3000/12",
 					"protocol": "http",
-					"host": [
-						"localhost"
-					],
+					"host": ["localhost"],
 					"port": "3000",
-					"path": [
-						"12"
-					]
+					"path": ["12"]
 				}
 			},
 			"response": []
@@ -154,13 +130,9 @@
 				"url": {
 					"raw": "http://localhost:3000/1",
 					"protocol": "http",
-					"host": [
-						"localhost"
-					],
+					"host": ["localhost"],
 					"port": "3000",
-					"path": [
-						"1"
-					]
+					"path": ["1"]
 				}
 			},
 			"response": []
@@ -173,13 +145,9 @@
 				"url": {
 					"raw": "http://localhost:3000/1",
 					"protocol": "http",
-					"host": [
-						"localhost"
-					],
+					"host": ["localhost"],
 					"port": "3000",
-					"path": [
-						"1"
-					]
+					"path": ["1"]
 				}
 			},
 			"response": []
@@ -192,13 +160,9 @@
 				"url": {
 					"raw": "http://localhost:3000/heartbeat",
 					"protocol": "http",
-					"host": [
-						"localhost"
-					],
+					"host": ["localhost"],
 					"port": "3000",
-					"path": [
-						"heartbeat"
-					]
+					"path": ["heartbeat"]
 				}
 			},
 			"response": []
