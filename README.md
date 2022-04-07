@@ -21,6 +21,7 @@
     -   `/src/2-entrypoints`
     -   `/src/3-use-cases`
     -   `/src/4-entities`
+-   There are eslint rules preventing importing from inner layer to the outer layers (see nested `.eslintrc` files).
 -   Start the project with `npm run dev` (see all the scripts you can run in [package.json](package.json)).
 -   After the project is started, there is example data put in the database (see [storage-migrations.ts](src/1-data-providers/storage/storage-migrations.ts)).
 
@@ -37,7 +38,6 @@
 
 ## TODOs
 
--   Since `1-data-providers` can be also communication with 3rd party services that do not provide data, eg send email service, maybe this should be named differently? Maybe external serviceis?
 -   Maybe Zod validation errors should not get returned directly by API in `additionalData` but transformed to out own data type in api-ports?
 -   Is `TodoWithoutId` really entity (core business type) or should it be higher, like in use-cases (it is need in use-cases but it does not feel like it belongs there)?
 -   Feedback from Reddit thread https://www.reddit.com/r/typescript/comments/qq8psv/ratecriticize_my_typescript_clean_architecture/
