@@ -1,7 +1,8 @@
-import { Todo, TodoWithoutId } from "../4-domain/todos";
-import { getTodosUseCaseMock } from "../utils/test/mock-todos-use-case";
-import { getId, idDoesNotExist } from "../utils/test/test-helpers";
-import { todos } from "./todos";
+import { Todo } from "../../4-domain/todos";
+import { getTodosUseCaseMock } from "../../utils/test/mock-todos-use-case";
+import { getId, idDoesNotExist } from "../../utils/test/test-helpers";
+import { todos } from ".";
+import { TodoWithoutId } from "./todos-types";
 
 describe("todos", () => {
 	const t1: Todo = { id: getId(), text: "t1", completed: false };

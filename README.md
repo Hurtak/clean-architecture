@@ -39,11 +39,11 @@
 ## TODOs
 
 -   Maybe Zod validation errors should not get returned directly by API in `additionalData` but transformed to out own data type in api-ports?
--   Is `TodoWithoutId` really entity (core business type) or should it be higher, like in use-cases (it is need in use-cases but it does not feel like it belongs there)?
--   Feedback from Reddit thread https://www.reddit.com/r/typescript/comments/qq8psv/ratecriticize_my_typescript_clean_architecture/
+-   Is logger entry-point?
 -   Maybe add more than one thing in the use-case? So we have more than one of each in the use case?
     -   something like dummy email service?
 -   `3-use-cases/todos.ts` pretty much re-implements storage types, maybe we could share it somehow?
+-   Feedback from Reddit thread https://www.reddit.com/r/typescript/comments/qq8psv/ratecriticize_my_typescript_clean_architecture/
 
 ## Related links
 

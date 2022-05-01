@@ -1,4 +1,5 @@
-import { Todo, TodoWithoutId } from "../../4-domain/todos";
+import { TodoWithoutId } from "../../3-use-cases/todos/todos-types";
+import { Todo } from "../../4-domain/todos";
 import { getTodosUseCaseMock } from "../../utils/test/mock-todos-use-case";
 import { getId, idDoesNotExist } from "../../utils/test/test-helpers";
 import { never } from "../../utils/typescript";

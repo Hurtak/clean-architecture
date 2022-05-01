@@ -1,4 +1,5 @@
-import { Todo, TodoWithoutId } from "../4-domain/todos";
+import { Todo } from "../../4-domain/todos";
+import { TodoWithoutId } from "./todos-types";
 
 export const todos = ({
 	todos,
