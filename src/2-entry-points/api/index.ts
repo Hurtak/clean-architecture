@@ -4,13 +4,16 @@ import koaBodyParser from "koa-bodyparser";
 
 import { Todos } from "../../3-use-cases/todos";
 import { Logger } from "../logger";
+import { apiHeartbeat } from "./api-heartbeat";
 import { apiTodos } from "./api-todos";
 import { apiResponseApply } from "./api-utis";
 
 export const api = ({ port, todos, logger }: { port: number; todos: Todos; logger: Logger }): void => {
 	const server = new Koa();
 	const router = new KoaRouter();
+
 	const apiTodosInstance = apiTodos({ todos });
+	const apiHeartbeatInstance = apiHeartbeat();
 
 	// Middleware's before routes
 	server.use(koaBodyParser({ enableTypes: ["json"] }));
@@ -23,7 +26,7 @@ export const api = ({ port, todos, logger }: { port: number; todos: Todos; logge
 	});
 
 	// Routes
-	router.get("/heartbeat", (ctx) => apiResponseApply(ctx, { status: 204 }));
+	router.get("/heartbeat", (ctx) => apiResponseApply(ctx, apiHeartbeatInstance.heartbeat()));
 
 	router.get("/todos", (ctx) => apiTodosInstance.getAll().then((res) => apiResponseApply(ctx, res)));
 	router.post("/todos", (ctx) => apiTodosInstance.create(ctx.request.body).then((res) => apiResponseApply(ctx, res)));
