@@ -3,7 +3,10 @@
 		"strict": true,
 		"module": "CommonJS",
 		"moduleResolution": "node",
-		"lib": ["ES2021"],
+		"lib": [
+			"dom", // Needed by vitest
+			"ES2021"
+		],
 		"target": "ES2021",
 		"outDir": "build",
 		"allowSyntheticDefaultImports": true,
