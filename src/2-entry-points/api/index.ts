@@ -8,6 +8,8 @@ import { apiHeartbeat } from "./api-heartbeat";
 import { apiTodos } from "./api-todos";
 import { apiResponseApply } from "./api-utis";
 
+const formatLogOutput = (body: unknown): string => JSON.stringify(body)?.slice(0, 100) ?? "";
+
 export const api = ({ port, todos, logger }: { port: number; todos: Todos; logger: Logger }): void => {
 	const server = new Koa();
 	const router = new KoaRouter();
@@ -18,7 +20,6 @@ export const api = ({ port, todos, logger }: { port: number; todos: Todos; logge
 	// Middleware's before routes
 	server.use(koaBodyParser({ enableTypes: ["json"] }));
 
-	const formatLogOutput = (body: unknown): string => JSON.stringify(body)?.slice(0, 100) ?? "";
 	server.use(async (ctx, next) => {
 		logger.log(`-> ${ctx.method} ${ctx.url} req ${formatLogOutput(ctx.request.body)}`);
 		await next();

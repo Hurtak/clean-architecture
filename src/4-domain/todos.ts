@@ -17,11 +17,14 @@ export const createTodo = (id: number, text: string, completed: boolean): Todo |
 
 export const validateTodoProperties = <T extends Todo | Partial<Todo>>(todo: T): T | Error => {
 	if (todo.text !== undefined) {
-		if (todo.text.length < 1) {
-			return new TodoTextTooShort("Todo text is too short, minimum text.length is 1 character");
+		const min = 2;
+		if (todo.text.length < min) {
+			return new TodoTextTooShort(`Todo text is too short, minimum text.length is ${min} character`);
 		}
-		if (todo.text.length > 100) {
-			return new TodoTextTooLong("Todo text is too long, maximum length is 100 characters");
+
+		const max = 100;
+		if (todo.text.length > max) {
+			return new TodoTextTooLong(`Todo text is too long, maximum length is ${max} characters`);
 		}
 	}
 

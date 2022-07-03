@@ -28,9 +28,9 @@ describe("todos", () => {
 			const res = await instance.getById(t1.id);
 			expect(res).toEqual(t1);
 		});
-		test("returns null when does not id exists", async () => {
+		test("returns undefined when does not id exists", async () => {
 			const res = await instance.getById(idDoesNotExist);
-			expect(res).toEqual(null);
+			expect(res).toEqual(undefined);
 		});
 	});
 
@@ -50,9 +50,9 @@ describe("todos", () => {
 			const res2 = await instance.getAll();
 			expect(res2).toHaveLength(initialState.length + 1);
 		});
-		test("returns null when does not id exists", async () => {
+		test("returns undefined when does not id exists", async () => {
 			const res = await instance.getById(idDoesNotExist);
-			expect(res).toEqual(null);
+			expect(res).toEqual(undefined);
 		});
 	});
 
@@ -81,7 +81,7 @@ describe("todos", () => {
 
 		test("does not do anything if does not exists", async () => {
 			const res1 = await instance.deleteById(idDoesNotExist);
-			expect(res1).toEqual(null);
+			expect(res1).toEqual(undefined);
 
 			const res2 = await instance.getAll();
 			expect(res2).toEqual(initialState);

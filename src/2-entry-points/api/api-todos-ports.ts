@@ -25,28 +25,16 @@ const validatorApiTodoWithoutId = z
 
 const apiBodyToTodoWithoutId = (body: ApiRequestBody): TodoWithoutId | Error => {
 	const parsed = validatorApiTodoWithoutId.safeParse(body);
-	if (parsed.success) {
-		return createTodoWithoutId(parsed.data.text, parsed.data.completed);
-	} else {
-		return parsed.error;
-	}
+	return parsed.success ? createTodoWithoutId(parsed.data.text, parsed.data.completed) : parsed.error;
 };
 const apiBodyToPartialTodoWithoutId = (body: ApiRequestBody): Partial<TodoWithoutId> | Error => {
 	const parsed = validatorApiTodoWithoutId.partial().safeParse(body);
-	if (parsed.success) {
-		return validateTodoProperties(parsed.data);
-	} else {
-		return parsed.error;
-	}
+	return parsed.success ? validateTodoProperties(parsed.data) : parsed.error;
 };
 
 export const validateApiTodoId = (params: ApiRequestParams): ApiRequestValidation<Todo["id"]> => {
 	const paramsValidator = z.object({
-		id: z
-			.string()
-			.nonempty()
-			.regex(/^\d+$/, "URL Todo ID must be a whole number")
-			.transform((str) => Number(str)),
+		id: z.string().min(1).regex(/^\d+$/, "URL Todo ID must be a whole number").transform(Number),
 	});
 
 	const paramsParsed = paramsValidator.safeParse(params);

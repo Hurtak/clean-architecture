@@ -17,10 +17,10 @@ export const storageTodos = ({ storageClient, logger }: { storageClient: Storage
 			`
 		);
 
-		return data.map(todoDatabaseToTodo);
+		return data.map((t) => todoDatabaseToTodo(t));
 	};
 
-	const getById = async (id: Todo["id"]): Promise<Todo | null> => {
+	const getById = async (id: Todo["id"]): Promise<Todo | undefined> => {
 		logger.verbose(`getting todo ${id}`);
 		const data = await storageClient.queryOne(
 			todoDatabaseValidator,
@@ -33,7 +33,7 @@ export const storageTodos = ({ storageClient, logger }: { storageClient: Storage
 		);
 		logger.verbose(data ? `getting todo ${id} done` : `getting todo ${id} failed, todo not found`);
 
-		return data ? todoDatabaseToTodo(data) : null;
+		return data ? todoDatabaseToTodo(data) : undefined;
 	};
 
 	const create = async (todoWithoutId: TodoWithoutId): Promise<Todo> => {
@@ -58,7 +58,7 @@ export const storageTodos = ({ storageClient, logger }: { storageClient: Storage
 		return todo;
 	};
 
-	const patchById = async (id: Todo["id"], partialTodo: Partial<TodoWithoutId>): Promise<Todo | null> => {
+	const patchById = async (id: Todo["id"], partialTodo: Partial<TodoWithoutId>): Promise<Todo | undefined> => {
 		logger.verbose(`updating todo ${id}`);
 
 		await storageClient.mutation(
@@ -68,13 +68,13 @@ export const storageTodos = ({ storageClient, logger }: { storageClient: Storage
 					completed = COALESCE($completed, completed)
 				WHERE id = $id;
 			`,
-			{ $id: id, $text: partialTodo.text ?? null, $completed: partialTodo.completed ?? null }
+			{ $id: id, $text: partialTodo.text, $completed: partialTodo.completed }
 		);
 
 		const todo = await getById(id);
 		if (!todo) {
 			logger.verbose(`updating todo ${id} failed, todo not found`);
-			return null;
+			return;
 		}
 
 		logger.verbose(`updating todo ${id} done`);
@@ -85,13 +85,13 @@ export const storageTodos = ({ storageClient, logger }: { storageClient: Storage
 		logger.verbose(`deleting all todos`);
 		await storageClient.mutation(`DELETE FROM todos`);
 	};
-	const deleteById = async (id: Todo["id"]): Promise<Todo | null> => {
+	const deleteById = async (id: Todo["id"]): Promise<Todo | undefined> => {
 		logger.verbose(`deleting todo ${id}`);
 
 		const todo = await getById(id);
 		if (!todo) {
 			logger.verbose(`deleting todo ${id} failed, todo not found`);
-			return null;
+			return;
 		}
 
 		await storageClient.mutation(

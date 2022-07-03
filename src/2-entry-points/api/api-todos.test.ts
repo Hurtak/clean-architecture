@@ -82,7 +82,7 @@ describe("apiTodos", () => {
 		testBodyTodoWithoutIdValid(instance.create);
 
 		test("todo creation", async () => {
-			const t: TodoWithoutId = { text: "t", completed: true };
+			const t: TodoWithoutId = { text: "text", completed: true };
 			const create = await instance.create(t);
 			expect(create.status).toEqual(200);
 			if (create.status !== 200) return never();

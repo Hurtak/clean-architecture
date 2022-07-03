@@ -1,21 +1,15 @@
 {
-	"parser": "@typescript-eslint/parser",
-	"parserOptions": {
-		"project": "./tsconfig.json"
-	},
-	"extends": [
-		"eslint:recommended",
-		"plugin:promise/recommended",
-		"plugin:@typescript-eslint/eslint-recommended",
-		"plugin:@typescript-eslint/recommended",
-		"plugin:@typescript-eslint/recommended-requiring-type-checking",
-		"prettier"
-	],
-	"plugins": ["simple-import-sort", "@typescript-eslint"],
+	"extends": ["start"],
 	"rules": {
-		"no-console": "error",
-		"simple-import-sort/imports": "error",
-		"simple-import-sort/exports": "error",
-		"@typescript-eslint/consistent-type-definitions": ["error", "type"]
-	}
+		"no-console": "error"
+	},
+
+	"overrides": [
+		{
+			"files": ["*.ts", "*.tsx"],
+			"parserOptions": {
+				"project": "./tsconfig.json"
+			}
+		}
+	]
 }

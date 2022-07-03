@@ -5,7 +5,7 @@ import { getId } from "./test-helpers";
 export const getTodosUseCaseMock = (initialState: ApiTodo[]): Todos => {
 	let todos: ApiTodo[] = [...initialState];
 
-	const getById = (id: number) => Promise.resolve(todos.find((t) => t.id === id) ?? null);
+	const getById = (id: number) => Promise.resolve(todos.find((t) => t.id === id));
 
 	return {
 		getAll: () => Promise.resolve(todos),
@@ -17,10 +17,10 @@ export const getTodosUseCaseMock = (initialState: ApiTodo[]): Todos => {
 		},
 		patchById: async (id, partialTodoWithoutId) => {
 			const t = await getById(id);
-			if (!t) return null;
+			if (!t) return;
 			todos = todos.map((t) => (t.id === id ? { ...t, ...partialTodoWithoutId } : t));
 			const tPatched = await getById(id);
-			return tPatched ?? null;
+			return tPatched;
 		},
 		deleteAll: () => {
 			todos = [];
@@ -28,7 +28,7 @@ export const getTodosUseCaseMock = (initialState: ApiTodo[]): Todos => {
 		},
 		deleteById: async (id) => {
 			const t = await getById(id);
-			if (!t) null;
+			if (!t) return;
 			todos = todos.filter((t) => t.id !== id);
 			return t;
 		},

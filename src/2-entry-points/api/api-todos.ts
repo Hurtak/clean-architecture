@@ -12,7 +12,7 @@ export const apiTodos = ({ todos }: { todos: Todos }) => {
 	return {
 		getAll: async (): Promise<ApiResponse<ApiTodo[]>> => {
 			const allTodos = await todos.getAll();
-			const body = allTodos.map(todoToApiTodo);
+			const body = allTodos.map((t) => todoToApiTodo(t));
 			return { status: 200, body };
 		},
 		deleteAll: async (): Promise<ApiResponse<void>> => {

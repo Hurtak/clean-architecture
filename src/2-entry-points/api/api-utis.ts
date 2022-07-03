@@ -1,14 +1,6 @@
 import { RouterContext } from "@koa/router";
 import { ZodError } from "zod";
 
-type ApiResponseError = { status: 400; body: ErrorResponse } | { status: 404 };
-export type ApiResponse<T> = { status: 200; body: T } | { status: 204 } | ApiResponseError;
-
-export type ApiRequestValidation<T> = { type: "VALID"; data: T } | { type: "INVALID"; body: ApiResponseError };
-
-export type ApiRequestParams = Record<string, string>;
-export type ApiRequestBody = unknown;
-
 export type ErrorResponse = {
 	error: {
 		name: string;
@@ -16,6 +8,14 @@ export type ErrorResponse = {
 		additionalData?: unknown;
 	};
 };
+
+type ApiResponseError = { status: 400; body: ErrorResponse } | { status: 404 };
+export type ApiResponse<T> = { status: 200; body: T } | { status: 204 } | ApiResponseError;
+
+export type ApiRequestValidation<T> = { type: "VALID"; data: T } | { type: "INVALID"; body: ApiResponseError };
+
+export type ApiRequestParams = Record<string, string>;
+export type ApiRequestBody = unknown;
 
 export const createErrorResponse = (error: unknown): ErrorResponse => {
 	if (error instanceof ZodError) {
