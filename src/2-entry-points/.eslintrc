@@ -3,7 +3,7 @@
 		"no-restricted-imports": [
 			"error",
 			{
-				"patterns": ["**/[0-1]*"]
+				"patterns": ["*/0-config/*", "*/1-external-services/*"]
 			}
 		]
 	}
