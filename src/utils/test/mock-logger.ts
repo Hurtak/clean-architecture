@@ -1,4 +1,4 @@
-import { Logger } from "../../3-use-cases/logger";
+import { Logger } from "../../2-entry-points/logger";
 import { noop } from "./test-helpers";
 
 export const getLoggerMock = (): Logger => {

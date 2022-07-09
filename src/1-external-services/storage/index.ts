@@ -1,4 +1,4 @@
-import { Logger } from "../../3-use-cases/logger";
+import { Logger } from "../../2-entry-points/logger";
 import { storageClient } from "./storage-client";
 import { storageMigrations } from "./storage-migrations";
 import { storageTodos } from "./storage-todos";
