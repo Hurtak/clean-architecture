@@ -2,8 +2,8 @@ import KoaRouter from "@koa/router";
 import Koa from "koa";
 import koaBodyParser from "koa-bodyparser";
 
+import { Logger } from "../../3-use-cases/logger";
 import { Todos } from "../../3-use-cases/todos";
-import { Logger } from "../logger";
 import { apiHeartbeat } from "./api-heartbeat";
 import { apiTodos } from "./api-todos";
 import { apiResponseApply } from "./api-utis";

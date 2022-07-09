@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { Logger } from "../../2-entry-points/logger";
+import { Logger } from "../../3-use-cases/logger";
 import { TodoWithoutId } from "../../3-use-cases/todos/todos-types";
 import { Todo } from "../../4-domain/todos";
 import { StorageClient } from "./storage-client";
