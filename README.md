@@ -38,7 +38,6 @@
 
 ## TODOs
 
--   Is logger entry-point? maybe rename?
 -   Maybe add more than one thing in the use-case? So we have more than one of each in the use case?
     -   something like dummy email service?
 -   `3-use-cases/todos.ts` pretty much re-implements storage types, maybe we could share it somehow?
