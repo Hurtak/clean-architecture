@@ -1,7 +1,7 @@
 export const idDoesNotExist = 0;
 
 export const getId: () => number = (() => {
-	let id = 1;
+	let id = 1; // make sure id never equals to "idDoesNotExist"
 	return () => id++;
 })();
 

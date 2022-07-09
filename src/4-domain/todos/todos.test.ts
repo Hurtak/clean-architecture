@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { createTodo, Todo, TodoTextTooLong, TodoTextTooShort, validateTodoProperties } from "./todos";
+import { createTodo, Todo, TodoTextTooLong, TodoTextTooShort, validateTodoProperties } from ".";
 
 describe("todos", () => {
 	const t: Todo = { id: 1, text: "text", completed: false };
