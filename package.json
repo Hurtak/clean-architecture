@@ -8,12 +8,13 @@
 		"build": "tsc",
 		"start": "NODE_ENV=production node build/index.js",
 		"test": "vitest watch",
+		"test:run": "vitest run",
 		"test:coverage": "vitest run --coverage",
-		"validate": "npm run validate:type-check && npm run validate:test && npm run validate:lint && npm run validate:prettier && npm run build",
-		"validate:type-check": "tsc --noEmit",
-		"validate:test": "vitest run",
-		"validate:lint": "eslint --ignore-path=.gitignore --ext=.ts .",
-		"validate:prettier": "prettier --check ."
+		"type-check": "tsc --noEmit",
+		"lint": "eslint --ignore-path=.gitignore --ext=.ts .",
+		"format": "prettier --ignore-path=.gitignore --check .",
+		"format:fix": "prettier --ignore-path=.gitignore --write .",
+		"validate": "npm run type-check && npm run test:run && npm run lint && npm run format && npm run build"
 	},
 	"dependencies": {
 		"@koa/router": "11.0.1",
