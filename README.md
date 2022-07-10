@@ -40,8 +40,6 @@
 
 -   Maybe add more than one thing in the use-case? So we have more than one of each in the use case?
     -   something like dummy email service?
--   `3-use-cases/todos.ts` pretty much re-implements storage types, maybe we could share it somehow?
--   Feedback from Reddit thread https://www.reddit.com/r/typescript/comments/qq8psv/ratecriticize_my_typescript_clean_architecture/
 
 ## Related links
 
