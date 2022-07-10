@@ -10,11 +10,11 @@
 		"test": "vitest watch",
 		"test:run": "vitest run",
 		"test:coverage": "vitest run --coverage",
-		"type-check": "tsc --noEmit",
+		"types": "tsc --noEmit",
 		"lint": "eslint --ignore-path=.gitignore --ext=.ts .",
 		"format": "prettier --ignore-path=.gitignore --check .",
 		"format:fix": "prettier --ignore-path=.gitignore --write .",
-		"validate": "npm run type-check && npm run test:run && npm run lint && npm run format && npm run build"
+		"validate": "npm run types && npm run test:run && npm run lint && npm run format && npm run build"
 	},
 	"dependencies": {
 		"@koa/router": "11.0.1",
