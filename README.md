@@ -17,13 +17,13 @@
 -   The project is trying to implement the [Clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) as cleanly as possible on small example app.
 -   The folder structure mirrors the Clean architecture as closely as possible. The folders that directly relate to the Clean architecture concepts (and the diagram above) have number prefixes, so they are sorted from the most outer layer to the most inner layer.
     -   `/src/0-config`
-    -   `/src/1-data-providers`
+    -   `/src/1-external-services`
     -   `/src/2-entrypoints`
     -   `/src/3-use-cases`
     -   `/src/4-entities`
 -   There are eslint rules preventing importing from inner layer to the outer layers (see nested `.eslintrc` files).
 -   Start the project with `npm run dev` (see all the scripts you can run in [package.json](package.json)).
--   After the project is started, there is example data put in the database (see [storage-migrations.ts](src/1-data-providers/storage/storage-migrations.ts)).
+-   After the project is started, there is example data put in the database (see [storage-migrations.ts](src/1-external-services/storage/storage-migrations.ts)).
 
 ## API
 
@@ -38,6 +38,8 @@
 
 ## TODOs
 
+-   validation should happen in use-cases?
+-   use either?
 -   Maybe add more than one thing in the use-case? So we have more than one of each in the use case?
     -   something like dummy email service?
 
