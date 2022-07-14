@@ -25,7 +25,11 @@ export const apiTodos = ({ todos }: { todos: Todos }) => {
 			if (apiTodo.type === "INVALID") return apiTodo.body;
 
 			const newTodo = await todos.create(apiTodo.data);
-			return { status: 200, body: newTodo };
+			return newTodo
+				? { status: 200, body: newTodo }
+				: // TODO: this should be handled more nicely than todos.create returning null
+				  // TODO: the error should be somewhere in constant, not hardcoded here
+				  { status: 503, body: { error: { name: "DatabaseError", message: "Database error" } } };
 		},
 
 		getById: async (params: ApiRequestParams): Promise<ApiResponse<ApiTodo>> => {

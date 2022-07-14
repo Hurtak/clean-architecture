@@ -1,7 +1,7 @@
 import { RouterContext } from "@koa/router";
 import { ZodError } from "zod";
 
-export type ErrorResponse = {
+type ErrorResponse = {
 	error: {
 		name: string;
 		message: string;
@@ -9,8 +9,9 @@ export type ErrorResponse = {
 	};
 };
 
-type ApiResponseError = { status: 400; body: ErrorResponse } | { status: 404 };
-export type ApiResponse<T> = { status: 200; body: T } | { status: 204 } | ApiResponseError;
+type ApiResponseOk<T> = { status: 200; body: T } | { status: 204 };
+type ApiResponseError = { status: 400; body: ErrorResponse } | { status: 404 } | { status: 503; body: ErrorResponse };
+export type ApiResponse<T> = ApiResponseOk<T> | ApiResponseError;
 
 export type ApiRequestValidation<T> = { type: "VALID"; data: T } | { type: "INVALID"; body: ApiResponseError };
 

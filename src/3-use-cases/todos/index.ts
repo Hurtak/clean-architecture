@@ -7,7 +7,7 @@ export const todos = ({
 	todos: {
 		getAll: () => Promise<Todo[]>;
 		getById: (id: Todo["id"]) => Promise<Todo | undefined>;
-		create: (todoWithoutId: TodoWithoutId) => Promise<Todo>;
+		create: (todoWithoutId: TodoWithoutId) => Promise<Todo | undefined>;
 		patchById: (id: Todo["id"], partialTodo: Partial<TodoWithoutId>) => Promise<Todo | undefined>;
 		deleteAll: () => Promise<void>;
 		deleteById: (id: Todo["id"]) => Promise<Todo | undefined>;
@@ -20,7 +20,7 @@ export const todos = ({
 		getById: (id: Todo["id"]): Promise<Todo | undefined> => {
 			return todos.getById(id);
 		},
-		create: (todoWithoutId: TodoWithoutId): Promise<Todo> => {
+		create: (todoWithoutId: TodoWithoutId): Promise<Todo | undefined> => {
 			return todos.create(todoWithoutId);
 		},
 		patchById: (id: Todo["id"], partialTodoWithoutId: Partial<TodoWithoutId>): Promise<Todo | undefined> => {

@@ -45,11 +45,11 @@
 
 ## TODOs
 
--   do not use throw and correctly propagate types
--   validation should happen in use-cases?
+-   add user domain with login/register etc
 -   Maybe add more than one thing in the use-case? So we have more than one of each in the use case?
     -   something like dummy email service?
 -   is `--unhandled-rejections=strict` still needed?
+-   fix all `TODO` in the code
 -   run everything through Grammarly
 
 ## Related links

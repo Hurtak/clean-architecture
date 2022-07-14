@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { createTodo, Todo, TodoTextTooLong, TodoTextTooShort, validateTodoProperties } from ".";
+import { createTodo, ErrorTodoTextTooLong, ErrorTodoTextTooShort, Todo, validateTodoProperties } from ".";
 
 describe("todos", () => {
 	const t: Todo = { id: 1, text: "text", completed: false };
@@ -10,10 +10,10 @@ describe("todos", () => {
 			expect(createTodo(t.id, t.text, t.completed)).toEqual(t);
 		});
 		test("returns error on too short text", () => {
-			expect(createTodo(t.id, "", t.completed)).toBeInstanceOf(TodoTextTooShort);
+			expect(createTodo(t.id, "", t.completed)).toBeInstanceOf(ErrorTodoTextTooShort);
 		});
 		test("returns error on too long text", () => {
-			expect(createTodo(t.id, "x".repeat(1000), t.completed)).toBeInstanceOf(TodoTextTooLong);
+			expect(createTodo(t.id, "x".repeat(1000), t.completed)).toBeInstanceOf(ErrorTodoTextTooLong);
 		});
 	});
 
@@ -24,10 +24,10 @@ describe("todos", () => {
 			expect(validateTodoProperties({})).toEqual({});
 		});
 		test("returns error on too short text", () => {
-			expect(validateTodoProperties({ text: "" })).toBeInstanceOf(TodoTextTooShort);
+			expect(validateTodoProperties({ text: "" })).toBeInstanceOf(ErrorTodoTextTooShort);
 		});
 		test("returns error on too long text", () => {
-			expect(validateTodoProperties({ text: "x".repeat(1000) })).toBeInstanceOf(TodoTextTooLong);
+			expect(validateTodoProperties({ text: "x".repeat(1000) })).toBeInstanceOf(ErrorTodoTextTooLong);
 		});
 	});
 });

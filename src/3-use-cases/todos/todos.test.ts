@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, test } from "vitest";
 
 import { Todo } from "../../4-domain/todos";
 import { getTodosUseCaseMock } from "../../utils/test/mock-todos-use-case";
-import { getId, idDoesNotExist } from "../../utils/test/test-helpers";
+import { assertIsDefined, getId, idDoesNotExist } from "../../utils/test/test-helpers";
 import { todos } from ".";
 import { TodoWithoutId } from "./todos-types";
 
@@ -38,7 +38,8 @@ describe("todos", () => {
 		const t: TodoWithoutId = { text: "t", completed: false };
 
 		test("creates todo", async () => {
-			const res = await instance.create(t);
+			const maybeRes = await instance.create(t);
+			const res = assertIsDefined(maybeRes);
 			expect(res).toEqual({ id: res.id, ...t });
 		});
 		test("increases number of todos by one", async () => {

@@ -36,7 +36,7 @@ export const storageTodos = ({ storageClient, logger }: { storageClient: Storage
 		return data ? todoDatabaseToTodo(data) : undefined;
 	};
 
-	const create = async (todoWithoutId: TodoWithoutId): Promise<Todo> => {
+	const create = async (todoWithoutId: TodoWithoutId): Promise<Todo | undefined> => {
 		logger.verbose(`creating todo`);
 		await storageClient.mutation(
 			`
@@ -51,7 +51,8 @@ export const storageTodos = ({ storageClient, logger }: { storageClient: Storage
 		);
 		const todo = await getById(data.id);
 		if (!todo) {
-			throw new Error("Unexpected state, created Todo but could not find it in the DB after creation.");
+			// TODO: this should be some generic database inconsistency error
+			return undefined;
 		}
 		logger.verbose(`created todo with id ${data.id}`);
 

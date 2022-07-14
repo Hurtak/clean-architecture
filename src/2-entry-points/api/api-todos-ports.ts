@@ -9,7 +9,9 @@ export type ApiTodo = {
 	text: string;
 	completed: boolean;
 };
+
 export type ApiTodoWithoutId = Omit<ApiTodo, "id">;
+
 export const todoToApiTodo = (todo: Todo): ApiTodo => ({
 	id: todo.id,
 	text: todo.text,
