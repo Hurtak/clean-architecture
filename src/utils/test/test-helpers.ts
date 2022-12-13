@@ -1,7 +1,3 @@
-import { expect } from "vitest";
-
-import { never } from "../typescript";
-
 export const idDoesNotExist = 0;
 
 export const getId: () => number = (() => {
@@ -11,13 +7,3 @@ export const getId: () => number = (() => {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export const noop = () => {};
-
-export const assertIsDefined = <T>(result: T | undefined): T => {
-	expect(result).toBeDefined();
-	if (result === undefined) {
-		// This should never happen since toBeDefined throws when result is undefined
-		return never();
-	}
-
-	return result;
-};

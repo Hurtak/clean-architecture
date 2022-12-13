@@ -1,10 +1,9 @@
-import { beforeEach, describe, expect, test } from "vitest";
+import { assert, beforeEach, describe, expect, test } from "vitest";
 
 import { TodoWithoutId } from "../../3-use-cases/todos/todos-types";
 import { Todo } from "../../4-domain/todos";
 import { getTodosUseCaseMock } from "../../utils/test/mock-todos-use-case";
 import { getId, idDoesNotExist } from "../../utils/test/test-helpers";
-import { never } from "../../utils/typescript";
 import { apiTodos } from "./api-todos";
 import { ApiRequestParams, ApiResponse } from "./api-utis";
 
@@ -61,7 +60,7 @@ describe("apiTodos", () => {
 	test("getAll", async () => {
 		const getAll = await instance.getAll();
 		expect(getAll.status).toEqual(200);
-		if (getAll.status !== 200) return never();
+		assert(getAll.status === 200);
 		expect(getAll.body).toEqual([t1, t2]);
 	});
 
@@ -72,7 +71,7 @@ describe("apiTodos", () => {
 		test("return todo when id exists", async () => {
 			const getById = await instance.getById({ id: String(t1.id) });
 			expect(getById.status).toEqual(200);
-			if (getById.status !== 200) return never();
+			assert(getById.status === 200);
 			expect(getById.body).toEqual(t1);
 		});
 	});
@@ -85,7 +84,7 @@ describe("apiTodos", () => {
 			const t: TodoWithoutId = { text: "text", completed: true };
 			const create = await instance.create(t);
 			expect(create.status).toEqual(200);
-			if (create.status !== 200) return never();
+			assert(create.status === 200);
 			expect(create.body).toEqual({ id: create.body.id, ...t });
 		});
 	});
@@ -99,7 +98,7 @@ describe("apiTodos", () => {
 			const patch: Partial<Todo> = { text: "patched" };
 			const patchById = await instance.patchById({ id: String(t1.id) }, patch);
 			expect(patchById.status).toEqual(200);
-			if (patchById.status !== 200) return never();
+			assert(patchById.status === 200);
 			expect(patchById.body).toEqual({ ...t1, ...patch });
 		});
 	});
@@ -111,11 +110,11 @@ describe("apiTodos", () => {
 		test("deletes todo when id exists", async () => {
 			const getById1 = await instance.getById({ id: String(t1.id) });
 			expect(getById1.status).toEqual(200);
-			if (getById1.status !== 200) return never();
+			assert(getById1.status === 200);
 
 			const deleteById = await instance.deleteById({ id: String(t1.id) });
 			expect(deleteById.status).toEqual(200);
-			if (deleteById.status !== 200) return never();
+			assert(deleteById.status === 200);
 
 			const getById2 = await instance.getById({ id: String(t1.id) });
 			expect(getById2.status).toEqual(404);
@@ -125,28 +124,28 @@ describe("apiTodos", () => {
 			const tDeleted = t2;
 
 			const getAll1 = await instance.getAll();
-			if (getAll1.status !== 200) return never();
+			assert(getAll1.status === 200);
 			expect(getAll1.body).toEqual(initialState);
 
 			const deleteById = await instance.deleteById({ id: String(tDeleted.id) });
-			if (deleteById.status !== 200) return never();
+			assert(deleteById.status === 200);
 
 			const getAll2 = await instance.getAll();
-			if (getAll2.status !== 200) return never();
+			assert(getAll2.status === 200);
 			expect(getAll2.body).toEqual(initialState.filter((t) => t.id !== tDeleted.id));
 		});
 	});
 
 	test("deleteAll", async () => {
 		const getAll1 = await instance.getAll();
-		if (getAll1.status !== 200) return never();
+		assert(getAll1.status === 200);
 		expect(getAll1.body).toHaveLength(initialState.length);
 
 		const deleteAll = await instance.deleteAll();
 		expect(deleteAll.status).toEqual(204);
 
 		const getAll2 = await instance.getAll();
-		if (getAll2.status !== 200) return never();
+		assert(getAll2.status === 200);
 		expect(getAll2.body).toHaveLength(0);
 	});
 });
